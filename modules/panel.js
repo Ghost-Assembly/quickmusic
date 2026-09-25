@@ -357,6 +357,11 @@ const QuickMusicToggle = GObject.registerClass(
             this._controls?.destroy();
             this._controls = null;
             this._source = null;
+            // The Shell parents this menu into the quick settings overlay and
+            // never destroys it (Shell 50.3 quickSettings.js has no destroy
+            // call), so without this every disable — every screen lock — would
+            // leave a menu, its rows and its focus group behind.
+            this.menu.destroy();
         }
     },
 );
