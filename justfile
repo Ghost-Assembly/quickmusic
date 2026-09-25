@@ -16,7 +16,7 @@ setup:
     npx playwright install chromium firefox
     @for tool in gjs glib-compile-schemas gnome-shell; do \
         command -v "$tool" >/dev/null \
-            || { echo "missing $tool — dnf install gjs glib2-devel gnome-shell"; exit 1; }; \
+            || { echo "missing $tool — dnf install gjs glib2 gnome-shell"; exit 1; }; \
     done
     @echo "ready"
 
@@ -47,7 +47,7 @@ coverage:
 # All three need something CI has not got: a real Shell, or a real session bus
 # with players on it.
 # Smoke-test in a headless gnome-shell, check the bundle, probe the live players
-test-live:
+test-live: build
     ./scripts/headless-check.sh
     ./scripts/pack-check.sh
     gjs -m scripts/mpris-check.js
@@ -85,9 +85,11 @@ build:
     zip -qr {{ uuid }}.shell-extension.zip {{ src }} -x 'schemas/gschemas.compiled'
     @echo "built {{ uuid }}.shell-extension.zip"
 
-# Run a nested gnome-shell to try the extension by hand
+# GNOME 49 and later have no nested mode: --devkit opens the Shell in a
+# window through mutter-devkit (dnf install mutter-devkit).
+# Run a gnome-shell in a window to try the extension by hand
 run:
-    dbus-run-session -- gnome-shell --wayland
+    dbus-run-session -- gnome-shell --devkit --wayland
 
 # Copy the extension into the user extensions directory
 install:
