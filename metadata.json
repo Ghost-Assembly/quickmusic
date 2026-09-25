@@ -1,0 +1,10 @@
+{
+    "uuid": "quickmusic@napalm255.github.io",
+    "name": "QuickMusic",
+    "description": "What is playing, in the quick settings menu and the top bar. Shows the current track from any MPRIS player — Spotify, browsers, Rhythmbox and more — with play/pause, previous and next.",
+    "shell-version": ["50"],
+    "url": "https://github.com/Ghost-Assembly/quickmusic",
+    "settings-schema": "org.gnome.shell.extensions.quickmusic",
+    "gettext-domain": "quickmusic",
+    "version-name": "0.1.0"
+}

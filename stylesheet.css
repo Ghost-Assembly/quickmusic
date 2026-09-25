@@ -1,0 +1,37 @@
+/* QuickMusic.
+ *
+ * gnome-shell loads this automatically for any extension that ships it. Keep
+ * it to presentation, and keep colors out: the Shell has a light and a dark
+ * style, so secondary text is dimmed with actor opacity in modules/panel.js
+ * rather than given a color here. The top bar label width is enforced in
+ * characters by modules/model.js, so the preference means what it says.
+ */
+
+.quickmusic-track {
+    spacing: 12px;
+}
+
+.quickmusic-art {
+    icon-size: 64px;
+}
+
+.quickmusic-title {
+    font-weight: bold;
+}
+
+.quickmusic-artist,
+.quickmusic-album {
+    font-size: 0.9em;
+}
+
+.quickmusic-controls-box {
+    spacing: 12px;
+}
+
+.quickmusic-button {
+    padding: 8px;
+}
+
+.quickmusic-panel-label {
+    padding-left: 4px;
+}

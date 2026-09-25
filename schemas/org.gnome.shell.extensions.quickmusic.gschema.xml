@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="quickmusic">
+  <schema id="org.gnome.shell.extensions.quickmusic"
+          path="/org/gnome/shell/extensions/quickmusic/">
+
+    <key type="b" name="show-panel-indicator">
+      <default>true</default>
+      <summary>Show the track in the top bar</summary>
+      <description>
+        Show the playing track's artist and title in the top bar. The item is
+        hidden while nothing is playing, whatever this is set to.
+      </description>
+    </key>
+
+    <key type="i" name="panel-max-chars">
+      <range min="10" max="120"/>
+      <default>40</default>
+      <summary>Top bar label width</summary>
+      <description>
+        The widest the top bar label may grow, in characters. Longer text is
+        cut short with an ellipsis.
+      </description>
+    </key>
+
+    <key type="s" name="pinned-player">
+      <default>''</default>
+      <summary>Pinned player</summary>
+      <description>
+        The player to follow instead of whichever is playing, as its MPRIS bus
+        name without the org.mpris.MediaPlayer2. prefix or any .instance
+        suffix — "spotify", say. Empty follows the active player.
+      </description>
+    </key>
+  </schema>
+</schemalist>

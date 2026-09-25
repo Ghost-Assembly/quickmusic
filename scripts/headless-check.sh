@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+# Boot a throwaway headless gnome-shell with QuickMusic installed and assert
+# that it enables cleanly, follows a player on the bus, disables cleanly, and
+# can be enabled again without leaking.
+#
+# The player is scripts/fake-player.js, on the throwaway session bus. The
+# extension logs "[quickmusic] showing <player> <status>" whenever the player
+# it shows changes, which is how this script sees the tile follow along:
+# appearing on the bus, pausing, vanishing, and being picked up again on a
+# re-enable with the player already running.
+#
+# This needs a real gnome-shell and so runs locally only; GitHub's runners have
+# no GNOME 50.
+
+set -euo pipefail
+
+# The system's GLib tools, not whichever are first on PATH. A Homebrew GLib
+# (pulled in as a dependency of something else) ships its own gsettings built
+# without the dconf module: it silently falls back to a keyfile, the value
+# reads back fine from gsettings itself, and the shell under test never sees
+# it — so the extension is never enabled and the check times out with no
+# error. Everything here must speak to the same GLib gnome-shell was built
+# against.
+export PATH="/usr/bin:$PATH"
+
+UUID="quickmusic@napalm255.github.io"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TIMEOUT="${TIMEOUT:-60}"
+
+# The private XDG directories must be exported BEFORE dbus-run-session starts,
+# not after. D-Bus activates dconf as a child of the bus, so a service started
+# by a bus that inherited the real XDG_CONFIG_HOME will read and write the
+# developer's own dconf database — `gsettings set` then silently affects the
+# real session and the shell under test loads the real extension list.
+if [[ -z "${QUICKMUSIC_HEADLESS:-}" ]]; then
+    QUICKMUSIC_WORK="$(mktemp -d)"
+    export QUICKMUSIC_HEADLESS=1
+    export QUICKMUSIC_WORK
+    export XDG_CONFIG_HOME="$QUICKMUSIC_WORK/config"
+    export XDG_DATA_HOME="$QUICKMUSIC_WORK/data"
+    export XDG_CACHE_HOME="$QUICKMUSIC_WORK/cache"
+    export XDG_RUNTIME_DIR="$QUICKMUSIC_WORK/run"
+    mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" "$XDG_RUNTIME_DIR"
+    chmod 700 "$XDG_RUNTIME_DIR"
+
+    exec dbus-run-session -- "${BASH_SOURCE[0]}" "$@"
+fi
+
+WORK="$QUICKMUSIC_WORK"
+LOG="$WORK/shell.log"
+
+EXT_DIR="$XDG_DATA_HOME/gnome-shell/extensions/$UUID"
+mkdir -p "$EXT_DIR"
+cp -r "$REPO_ROOT"/metadata.json "$REPO_ROOT"/extension.js "$REPO_ROOT"/prefs.js \
+      "$REPO_ROOT"/stylesheet.css "$REPO_ROOT"/modules "$REPO_ROOT"/schemas \
+      "$REPO_ROOT"/icons "$EXT_DIR/"
+glib-compile-schemas "$EXT_DIR/schemas"
+
+gsettings set org.gnome.shell disable-user-extensions false
+gsettings set org.gnome.shell enabled-extensions "['$UUID']"
+
+# Guard against the isolation failing: if dconf were leaking into the real
+# session, this would come back holding the developer's extensions.
+enabled="$(gsettings get org.gnome.shell enabled-extensions)"
+if [[ "$enabled" != "['$UUID']" ]]; then
+    echo "FAIL: dconf is not isolated; enabled-extensions = $enabled" >&2
+    rm -rf "$WORK"
+    exit 1
+fi
+
+# The enable marker is logged at debug level, which GLib drops unless asked
+# for. Without this the shell starts perfectly and the check still fails.
+export G_MESSAGES_DEBUG=all
+
+gnome-shell --wayland --headless --virtual-monitor 3840x1600 >"$LOG" 2>&1 &
+SHELL_PID=$!
+# shellcheck disable=SC2317  # invoked via trap
+cleanup() {
+    # Captured first: this trap's own last command would otherwise become the
+    # script's exit status, which is how a run that printed PASS still exited 1.
+    local status=$?
+
+    [[ -n "${PLAYER_PID:-}" ]] && kill "$PLAYER_PID" 2>/dev/null
+    kill "$SHELL_PID" 2>/dev/null || true
+    wait "$SHELL_PID" 2>/dev/null || true
+
+    # D-Bus activates gvfs inside the throwaway XDG_RUNTIME_DIR, and its fuse
+    # mount is not ours to unmount, so the directory may refuse to go. Leaving a
+    # few files in /tmp must not turn a passing check into a failing one.
+    rm -rf "$WORK" 2>/dev/null || true
+
+    return "$status"
+}
+trap cleanup EXIT
+
+fail() {
+    echo "FAIL: $1" >&2
+    echo "---- shell log (quickmusic and errors only) ----" >&2
+    grep -aiE 'quickmusic|JS ERROR|Extension' "$LOG" >&2 || echo "(nothing matched)" >&2
+    exit 1
+}
+
+# Counts occurrences rather than truncating between phases: gnome-shell keeps
+# the log open, so truncating leaves its file offset intact and the next write
+# pads the gap with NULs — grep then reports "binary file matches" and the
+# failure diagnostics come out empty at exactly the wrong moment.
+wait_for() {
+    local pattern="$1" wanted="${2:-1}" waited=0
+    while ((waited < TIMEOUT)); do
+        (($(grep -ac "$pattern" "$LOG") >= wanted)) && return 0
+        kill -0 "$SHELL_PID" 2>/dev/null || fail "gnome-shell exited early"
+        sleep 1
+        ((waited++))
+    done
+    return 1
+}
+
+PLAYER="org.mpris.MediaPlayer2.quickmusictest"
+PLAYER_PID=""
+
+start_player() {
+    gjs -m "$REPO_ROOT/scripts/fake-player.js" >>"$WORK/player.log" 2>&1 &
+    PLAYER_PID=$!
+}
+
+stop_player() {
+    kill "$PLAYER_PID" 2>/dev/null || true
+    wait "$PLAYER_PID" 2>/dev/null || true
+    PLAYER_PID=""
+}
+
+player_call() {
+    gdbus call --session --dest "$PLAYER" --object-path /org/mpris/MediaPlayer2 \
+        --method "org.mpris.MediaPlayer2.Player.$1" >/dev/null
+}
+
+wait_for '\[quickmusic\] enabled' || fail "extension never reported enabled within ${TIMEOUT}s"
+wait_for '\[quickmusic\] showing none' || fail "extension never reported an empty bus"
+echo "ok: enabled, no players"
+
+# A player appearing after enable: NameOwnerChanged, then the proxies.
+start_player
+wait_for '\[quickmusic\] showing quickmusictest Playing' \
+    || fail "a player that appeared on the bus never reached the tile"
+echo "ok: picked up a new player"
+
+# A property change: PropertiesChanged through the proxy cache.
+player_call PlayPause
+wait_for '\[quickmusic\] showing quickmusictest Paused' \
+    || fail "the tile did not follow the player pausing"
+echo "ok: followed a pause"
+
+# The player vanishing.
+stop_player
+wait_for '\[quickmusic\] showing none' 2 || fail "the tile kept a player that quit"
+echo "ok: dropped a player that quit"
+
+# A second enable must be as clean as the first — this time with a player
+# already on the bus, so it is found by ListNames rather than by a signal.
+start_player
+wait_for '\[quickmusic\] showing quickmusictest Playing' 2 \
+    || fail "the restarted player never reached the tile"
+gnome-extensions disable "$UUID"
+sleep 3
+gnome-extensions enable "$UUID"
+wait_for '\[quickmusic\] enabled' 2 || fail "extension did not re-enable after disable"
+wait_for '\[quickmusic\] showing quickmusictest Playing' 3 \
+    || fail "a re-enable did not find the player already on the bus"
+echo "ok: re-enabled after disable and found the running player"
+stop_player
+
+if grep -qaE 'JS ERROR|Extension .* had error' "$LOG"; then
+    fail "javascript errors in the shell log"
+fi
+
+if grep -qaiE 'No signal handler|instance with invalid|Object .* has been already deallocated' "$LOG"; then
+    fail "signal or object lifetime warnings after re-enable"
+fi
+
+if grep -qaiE 'Source ID .* was not found|GSource .* still active' "$LOG"; then
+    fail "a GLib source outlived its disable"
+fi
+
+if grep -qaE '\[quickmusic\] .*: ' "$LOG"; then
+    fail "the extension logged a warning"
+fi
+
+echo "ok: no errors or lifetime warnings"
+echo "PASS"

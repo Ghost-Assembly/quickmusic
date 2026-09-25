@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="16px" width="16px" viewBox="0 0 16 16">
+    <!--
+        A beamed pair of eighth notes.
+
+        The comment sits inside the svg element deliberately. A comment before
+        the opening tag defeats gdk-pixbuf's format sniffing, and the icon then
+        fails to load with nothing in the log to say why.
+
+        fill="#222222" is Adwaita's convention; gnome-shell recolors a
+        *-symbolic.svg from the theme.
+    -->
+    <g fill="#222222">
+        <path d="M5 3.2 14 1v10.2a2.3 2 0 1 1-1.5-1.9V4.2L6.5 5.6v7.6A2.3 2 0 1 1 5 11.3z"/>
+    </g>
+</svg>

@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>QuickMusic · Ghost Assembly</title>
+        <meta
+            name="description"
+            content="QuickMusic shows what is playing in the GNOME quick settings menu and the top bar, for any MPRIS player — Spotify, browsers, Rhythmbox, VLC and the rest."
+        />
+        <meta name="color-scheme" content="dark light" />
+        <meta name="theme-color" content="#03030a" />
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+        <link
+            rel="preload"
+            href="assets/fonts/orbitron-latin.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link rel="stylesheet" href="style.css" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Ghost Assembly" />
+        <meta property="og:title" content="QuickMusic" />
+        <meta
+            property="og:description"
+            content="What is playing, in the GNOME quick settings menu and the top bar."
+        />
+        <meta
+            property="og:url"
+            content="https://ghost-assembly.github.io/quickmusic/"
+        />
+        <meta
+            property="og:image"
+            content="https://ghost-assembly.github.io/quickmusic/assets/og-image.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="The Ghost Assembly logo" />
+        <meta name="twitter:card" content="summary_large_image" />
+    </head>
+    <body>
+        <a class="skip" href="#main">Skip to content</a>
+
+        <div class="night">
+            <header class="bar">
+                <a class="crumb" href="#top" aria-label="QuickMusic, back to top">
+                    <img src="assets/emblem.webp" alt="" width="32" height="32" />
+                    <span class="org">Ghost Assembly</span>
+                    <span class="sep" aria-hidden="true">/</span>
+                    <span class="product">QuickMusic</span>
+                </a>
+                <nav aria-label="Site">
+                    <ul>
+                        <li><a href="#overview" aria-current="page">Docs</a></li>
+                        <li class="wide-only">
+                            <a
+                                href="https://github.com/Ghost-Assembly/quickmusic/releases"
+                                >Releases</a
+                            >
+                        </li>
+                        <li>
+                            <a href="https://github.com/Ghost-Assembly/quickmusic"
+                                >GitHub
+                                <svg
+                                    width="15"
+                                    height="15"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M14 4h6v6" />
+                                    <path d="M20 4l-9 9" />
+                                    <path
+                                        d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"
+                                    /></svg
+                            ></a>
+                        </li>
+                        <li class="wide-only"><span class="version">v0.1.0</span></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section class="hero" id="top" aria-labelledby="title">
+                <div class="halo" aria-hidden="true"></div>
+                <div>
+                    <p class="eyebrow">GNOME Shell extension</p>
+                    <h1 id="title">QuickMusic</h1>
+                    <p class="tagline">
+                        What is playing, in the GNOME quick settings menu and the top
+                        bar.
+                    </p>
+                    <p class="lede">
+                        Shows the current track from any MPRIS player — Spotify
+                        (including the Flatpak), browsers, Rhythmbox, VLC and the rest —
+                        with play/pause, previous, next and a button to bring the player
+                        to the front.
+                    </p>
+                    <ul class="chips" aria-label="At a glance">
+                        <li class="chip">GNOME Shell 50</li>
+                        <li class="chip">Any MPRIS player</li>
+                        <li class="chip">GPL-3.0-or-later</li>
+                    </ul>
+                    <p class="actions">
+                        <a class="button primary" href="#install">
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M12 4v11" />
+                                <path d="M7 10l5 5 5-5" />
+                                <path d="M5 20h14" />
+                            </svg>
+                            Install</a
+                        >
+                        <a
+                            class="button"
+                            href="https://github.com/Ghost-Assembly/quickmusic"
+                            >Source on GitHub</a
+                        >
+                    </p>
+                </div>
+
+                <figure
+                    class="shot"
+                    role="img"
+                    aria-label="QuickMusic in GNOME: the top bar reads “Foo Fighters – My Hero”, and the quick settings tile is open on Spotify with cover art, previous, pause and next, Open Spotify and the player picker."
+                >
+                    <div class="gtop">
+                        <span class="ws"><i></i><i></i><i></i></span>
+                        <span class="clock">Thu 24 Sep 18:24</span>
+                        <span class="qm">
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <rect x="6" y="5" width="4" height="14" rx="1" />
+                                <rect x="14" y="5" width="4" height="14" rx="1" />
+                            </svg>
+                            <span class="qm-t">Foo Fighters – My Hero</span></span
+                        >
+                        <span class="sys">
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M4.5 10a11 11 0 0 1 15 0" />
+                                <path d="M7.5 13a7 7 0 0 1 9 0" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M4 10v4h3l5 4V6L7 10z" />
+                                <path d="M16 9a4 4 0 0 1 0 6" />
+                            </svg>
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <rect x="3" y="7" width="16" height="10" rx="2" />
+                                <path d="M21 11v2" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="qs">
+                        <div class="qs-row">
+                            <div class="tile on">
+                                <svg
+                                    width="17"
+                                    height="17"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M9 18V5l11-2v13" />
+                                    <circle cx="6.5" cy="18" r="2.5" />
+                                    <circle cx="17.5" cy="16" r="2.5" />
+                                </svg>
+                                <span class="t"
+                                    ><b>My Hero</b><span>Foo Fighters</span></span
+                                >
+                                <span class="more"
+                                    ><svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2.4"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M6 9l6 6 6-6" /></svg
+                                ></span>
+                            </div>
+                            <div class="tile">
+                                <svg
+                                    width="17"
+                                    height="17"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"
+                                    />
+                                </svg>
+                                <span class="t"
+                                    ><b>Night Light</b><span>Disabled</span></span
+                                >
+                            </div>
+                        </div>
+                        <div class="qs-menu">
+                            <div class="qs-head">
+                                <span class="badge"
+                                    ><svg
+                                        width="17"
+                                        height="17"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M9 18V5l11-2v13" />
+                                        <circle cx="6.5" cy="18" r="2.5" />
+                                        <circle cx="17.5" cy="16" r="2.5" /></svg
+                                ></span>
+                                <span><b>Spotify</b><span>Playing</span></span>
+                            </div>
+                            <div class="track">
+                                <span class="cover"
+                                    ><svg
+                                        width="34"
+                                        height="34"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.4"
+                                    >
+                                        <circle cx="12" cy="12" r="9" />
+                                        <circle cx="12" cy="12" r="5" />
+                                        <circle cx="12" cy="12" r="1.2" /></svg
+                                ></span>
+                                <span class="t"
+                                    ><b>My Hero</b><span>Foo Fighters</span
+                                    ><span>The Colour And The Shape</span></span
+                                >
+                            </div>
+                            <div class="controls">
+                                <span
+                                    ><svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                    >
+                                        <rect
+                                            x="5"
+                                            y="5"
+                                            width="2.5"
+                                            height="14"
+                                            rx="1"
+                                        />
+                                        <path d="M19 5.5v13L9 12z" /></svg
+                                ></span>
+                                <span class="main"
+                                    ><svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                    >
+                                        <rect
+                                            x="6"
+                                            y="5"
+                                            width="4"
+                                            height="14"
+                                            rx="1"
+                                        />
+                                        <rect
+                                            x="14"
+                                            y="5"
+                                            width="4"
+                                            height="14"
+                                            rx="1"
+                                        /></svg
+                                ></span>
+                                <span
+                                    ><svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                    >
+                                        <path d="M5 5.5v13L15 12z" />
+                                        <rect
+                                            x="16.5"
+                                            y="5"
+                                            width="2.5"
+                                            height="14"
+                                            rx="1"
+                                        /></svg
+                                ></span>
+                            </div>
+                            <div class="qs-item hl">Open Spotify</div>
+                            <div class="qs-sep"></div>
+                            <div class="qs-item">
+                                Player: Automatic
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.4"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M9 6l6 6-6 6" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+            </section>
+        </div>
+
+        <div class="docs">
+            <nav class="toc" aria-labelledby="toc-title">
+                <p class="toc-title" id="toc-title">On this page</p>
+                <ol>
+                    <li>
+                        <a href="#overview"><span class="n">01</span>Overview</a>
+                    </li>
+                    <li>
+                        <a href="#install"><span class="n">02</span>Install</a>
+                    </li>
+                    <li>
+                        <a href="#players"><span class="n">03</span>Players</a>
+                    </li>
+                    <li>
+                        <a href="#preferences"><span class="n">04</span>Preferences</a>
+                    </li>
+                    <li>
+                        <a href="#keyboard"
+                            ><span class="n">05</span>Keyboard &amp; mouse</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#architecture"
+                            ><span class="n">06</span>Architecture</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#development"><span class="n">07</span>Development</a>
+                    </li>
+                    <li>
+                        <a href="#releasing"><span class="n">08</span>Releasing</a>
+                    </li>
+                </ol>
+                <ul class="toc-links">
+                    <li>
+                        <a href="https://github.com/Ghost-Assembly/quickmusic/issues">
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M12 8v5" />
+                                <path d="M12 16.5h.01" />
+                            </svg>
+                            Report an issue</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/Ghost-Assembly/quickmusic/blob/main/SECURITY.md"
+                        >
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"
+                                />
+                            </svg>
+                            Security policy</a
+                        >
+                    </li>
+                    <li>
+                        <a href="https://ghost-assembly.github.io/">
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M19 12H5" />
+                                <path d="M11 6l-6 6 6 6" />
+                            </svg>
+                            All Ghost Assembly projects</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+
+            <main class="content" id="main">
+                <details class="toc-m">
+                    <summary>
+                        On this page
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </summary>
+                    <ol>
+                        <li>
+                            <a href="#overview"><span class="n">01</span>Overview</a>
+                        </li>
+                        <li>
+                            <a href="#install"><span class="n">02</span>Install</a>
+                        </li>
+                        <li>
+                            <a href="#players"><span class="n">03</span>Players</a>
+                        </li>
+                        <li>
+                            <a href="#preferences"
+                                ><span class="n">04</span>Preferences</a
+                            >
+                        </li>
+                        <li>
+                            <a href="#keyboard"
+                                ><span class="n">05</span>Keyboard &amp; mouse</a
+                            >
+                        </li>
+                        <li>
+                            <a href="#architecture"
+                                ><span class="n">06</span>Architecture</a
+                            >
+                        </li>
+                        <li>
+                            <a href="#development"
+                                ><span class="n">07</span>Development</a
+                            >
+                        </li>
+                        <li>
+                            <a href="#releasing"><span class="n">08</span>Releasing</a>
+                        </li>
+                    </ol>
+                </details>
+
+                <section class="section" id="overview" aria-labelledby="overview-title">
+                    <p class="kicker">01</p>
+                    <h2 id="overview-title">Overview</h2>
+                    <p class="lead">
+                        QuickMusic adds one tile to quick settings and, while something
+                        plays, one item to the top bar. It reads the standard MPRIS
+                        interface players already publish on the session bus, so there
+                        is nothing else to install.
+                    </p>
+                    <div class="cards">
+                        <article class="card">
+                            <span class="icon"
+                                ><svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <rect x="3" y="3" width="8" height="8" rx="2" />
+                                    <rect x="13" y="3" width="8" height="8" rx="2" />
+                                    <rect x="3" y="13" width="8" height="8" rx="2" />
+                                    <rect
+                                        x="13"
+                                        y="13"
+                                        width="8"
+                                        height="8"
+                                        rx="2"
+                                    /></svg
+                            ></span>
+                            <h3>Quick settings tile</h3>
+                            <p>
+                                Title and artist; click to play or pause. The arrow
+                                opens cover art, album, previous / play-pause / next,
+                                “Open ‹player›” and a player picker.
+                            </p>
+                        </article>
+                        <article class="card">
+                            <span class="icon"
+                                ><svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <rect x="3" y="4" width="18" height="16" rx="3" />
+                                    <path d="M3 9h18" />
+                                    <path d="M13 6.5h5" /></svg
+                            ></span>
+                            <h3>Top bar item</h3>
+                            <p>
+                                “Artist – Title” while something is playing, hidden
+                                otherwise. Left-click plays and pauses; right-click
+                                opens the same controls.
+                            </p>
+                        </article>
+                        <article class="card">
+                            <span class="icon"
+                                ><svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path d="M5.6 5.6a9 9 0 0 0 0 12.8" />
+                                    <path d="M18.4 5.6a9 9 0 0 1 0 12.8" />
+                                    <path d="M8.5 8.5a5 5 0 0 0 0 7" />
+                                    <path d="M15.5 8.5a5 5 0 0 1 0 7" /></svg
+                            ></span>
+                            <h3>Follows the active player</h3>
+                            <p>
+                                Whichever started playing most recently, and the last
+                                one used once nothing is. Pin one from the picker to
+                                stay on it.
+                            </p>
+                        </article>
+                        <article class="card">
+                            <span class="icon"
+                                ><svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M9 18V5l11-2v13" />
+                                    <circle cx="6.5" cy="18" r="2.5" />
+                                    <circle cx="17.5" cy="16" r="2.5" /></svg
+                            ></span>
+                            <h3>Any MPRIS player</h3>
+                            <p>
+                                Spotify (including the Flatpak), Firefox, Chromium,
+                                Rhythmbox, VLC and most others. Nothing extra to
+                                install.
+                            </p>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="section" id="install" aria-labelledby="install-title">
+                    <p class="kicker">02</p>
+                    <h2 id="install-title">Install</h2>
+                    <h3>Requires</h3>
+                    <ul class="bullets">
+                        <li><span>GNOME Shell 50.</span></li>
+                        <li>
+                            <span
+                                >A player that speaks MPRIS. Most do. A Flatpak player
+                                also needs its manifest to allow
+                                <code>org.mpris.MediaPlayer2.&lt;name&gt;</code> on the
+                                session bus; Spotify’s does.</span
+                            >
+                        </li>
+                        <li>
+                            <span
+                                >GVfs for cover art served over https. It is part of a
+                                standard GNOME install, and the Shell’s own media
+                                controls rely on it too.</span
+                            >
+                        </li>
+                    </ul>
+                    <h3>From a release</h3>
+                    <div class="code night">
+                        <header>
+                            <span>Shell</span
+                            ><span class="dots" aria-hidden="true"
+                                ><i></i><i></i><i></i
+                            ></span>
+                        </header>
+                        <pre
+                            tabindex="0"
+                        ><span class="p">$ </span><span class="k">curl</span> -LO https://github.com/Ghost-Assembly/quickmusic/releases/latest/download/quickmusic@napalm255.github.io.shell-extension.zip
+<span class="p">$ </span><span class="k">gnome-extensions</span> install --force quickmusic@napalm255.github.io.shell-extension.zip
+<span class="p">$ </span><span class="k">gnome-extensions</span> enable quickmusic@napalm255.github.io</pre>
+                    </div>
+                    <h3>From a clone</h3>
+                    <div class="code night">
+                        <header>
+                            <span>Shell</span
+                            ><span class="dots" aria-hidden="true"
+                                ><i></i><i></i><i></i
+                            ></span>
+                        </header>
+                        <pre
+                            tabindex="0"
+                        ><span class="p">$ </span><span class="k">just</span> setup
+<span class="p">$ </span><span class="k">just</span> install
+<span class="p">$ </span><span class="k">just</span> enable</pre>
+                    </div>
+                    <div class="note">
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M12 11v5" />
+                            <path d="M12 7.5h.01" />
+                        </svg>
+                        <p>
+                            <strong>Log out and back in.</strong> A newly installed
+                            extension is only picked up when the Shell next starts. On
+                            Wayland that means a new session.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="section" id="players" aria-labelledby="players-title">
+                    <p class="kicker">03</p>
+                    <h2 id="players-title">Players</h2>
+                    <p>
+                        QuickMusic speaks
+                        <a
+                            href="https://specifications.freedesktop.org/mpris-spec/latest/"
+                            >MPRIS</a
+                        >, the D-Bus interface desktop media players publish. With
+                        several running, the tile shows the first that applies:
+                    </p>
+                    <ol class="steps">
+                        <li>
+                            <span class="n" aria-hidden="true">01</span
+                            ><span
+                                >The <strong>pinned</strong> player, if it is
+                                running.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="n" aria-hidden="true">02</span
+                            ><span
+                                >The playing player that
+                                <strong>started most recently</strong>.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="n" aria-hidden="true">03</span
+                            ><span
+                                >The <strong>last player shown</strong>, so pausing does
+                                not jump elsewhere.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="n" aria-hidden="true">04</span
+                            ><span>The first by name.</span>
+                        </li>
+                    </ol>
+                    <p>
+                        A pin is stored without any instance suffix —
+                        <code>chromium</code>, not <code>chromium.instance2</code> — so
+                        it survives the player restarting. A pinned player that is not
+                        running stays in the picker, marked “(not running)”, so the pin
+                        can be seen and undone.
+                    </p>
+                    <div class="code night">
+                        <header>
+                            <span>just mpris-check</span
+                            ><span class="dots" aria-hidden="true"
+                                ><i></i><i></i><i></i
+                            ></span>
+                        </header>
+                        <pre
+                            tabindex="0"
+                        ><span class="p">$ </span><span class="k">just</span> mpris-check
+  chromium (Chrome) Stopped
+    (no track)
+    can:   (nothing)
+<span class="hi">*</span> spotify (Spotify) Playing
+    Foo Fighters – My Hero
+    album: The Colour And The Shape
+    can:   canPlay canPause canGoPrevious canGoNext canRaise</pre>
+                    </div>
+                </section>
+
+                <section
+                    class="section"
+                    id="preferences"
+                    aria-labelledby="preferences-title"
+                >
+                    <p class="kicker">04</p>
+                    <h2 id="preferences-title">Preferences</h2>
+                    <p>
+                        Open them from the Extensions app, or with
+                        <code>just prefs</code> from a clone.
+                    </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Setting</th>
+                                <th scope="col">Default</th>
+                                <th scope="col">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Setting">Show in the top bar</td>
+                                <td data-label="Default">On</td>
+                                <td data-label="Notes" class="muted">
+                                    Hidden while nothing is playing, either way.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Setting">Top bar label width</td>
+                                <td data-label="Default">40 characters</td>
+                                <td data-label="Notes" class="muted">
+                                    10 to 120. Longer text is cut with an ellipsis.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Setting">Pinned player</td>
+                                <td data-label="Default">None</td>
+                                <td data-label="Notes" class="muted">
+                                    Set from the quick settings picker; “Forget” clears
+                                    it.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="section" id="keyboard" aria-labelledby="keyboard-title">
+                    <p class="kicker">05</p>
+                    <h2 id="keyboard-title">Keyboard &amp; mouse</h2>
+                    <p>The top bar item works without a mouse once it has focus.</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Input</th>
+                                <th scope="col">Does</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Input">
+                                    <span class="keys">Left-click</span>
+                                </td>
+                                <td data-label="Does">Play or pause</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Input">
+                                    <span class="keys">Right-click</span>
+                                </td>
+                                <td data-label="Does">Open the controls</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Input">
+                                    <span class="keys"
+                                        ><kbd class="kbd">Enter</kbd> or
+                                        <kbd class="kbd">Space</kbd></span
+                                    >
+                                </td>
+                                <td data-label="Does">Play or pause</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Input">
+                                    <span class="keys"
+                                        ><kbd class="kbd">Menu</kbd> or
+                                        <kbd class="kbd">Shift</kbd>+<kbd class="kbd"
+                                            >F10</kbd
+                                        ></span
+                                    >
+                                </td>
+                                <td data-label="Does">Open the controls</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        A screen reader hears the whole track and what activating the
+                        item would do — “Pause Foo Fighters – My Hero” — even when the
+                        visible label is cut short.
+                    </p>
+                </section>
+
+                <section
+                    class="section"
+                    id="architecture"
+                    aria-labelledby="architecture-title"
+                >
+                    <p class="kicker">06</p>
+                    <h2 id="architecture-title">Architecture</h2>
+                    <p>
+                        Every decision lives in one pure module. The files around it
+                        only move data between it and the bus or the Shell, so the suite
+                        can test the decisions on plain Node.
+                    </p>
+                    <div
+                        class="diagram"
+                        role="img"
+                        aria-label="Players on the session bus feed modules/mpris.js, which hands snapshots to modules/model.js; modules/panel.js asks model.js what to show."
+                    >
+                        <div class="node">
+                            <b>Session bus</b
+                            ><span>Spotify, Chrome and any other MPRIS player.</span>
+                        </div>
+                        <span class="arrow"
+                            ><svg
+                                width="22"
+                                height="22"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                                <path d="M13 6l6 6-6 6" /></svg
+                        ></span>
+                        <div class="node">
+                            <b>mpris.js</b
+                            ><span
+                                >D-Bus plumbing. One proxy per player interface.</span
+                            >
+                        </div>
+                        <span class="arrow"
+                            ><svg
+                                width="22"
+                                height="22"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                                <path d="M13 6l6 6-6 6" /></svg
+                        ></span>
+                        <div class="node key">
+                            <b>model.js</b
+                            ><span
+                                >Every decision. Imports nothing; tested on Node.</span
+                            >
+                        </div>
+                        <span class="arrow"
+                            ><svg
+                                width="22"
+                                height="22"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M19 12H5" />
+                                <path d="M11 6l-6 6 6 6" /></svg
+                        ></span>
+                        <div class="node">
+                            <b>panel.js</b
+                            ><span>The tile, its menu and the top bar item.</span>
+                        </div>
+                    </div>
+                    <div class="node wide">
+                        <b>settings.js</b
+                        ><span
+                            >Schema keys and their wording, shared by panel.js and
+                            prefs.js and checked against the gschema.</span
+                        >
+                    </div>
+                    <div class="note">
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z" />
+                        </svg>
+                        <p>
+                            <strong>Players are untrusted.</strong> Text is set as plain
+                            text, flattened to one line and capped; cover art loads only
+                            from <code>https://</code> or <code>file://</code>. See the
+                            <a
+                                href="https://github.com/Ghost-Assembly/quickmusic/blob/main/SECURITY.md"
+                                >security policy</a
+                            >.
+                        </p>
+                    </div>
+                </section>
+
+                <section
+                    class="section"
+                    id="development"
+                    aria-labelledby="development-title"
+                >
+                    <p class="kicker">07</p>
+                    <h2 id="development-title">Development</h2>
+                    <div class="code night">
+                        <header>
+                            <span>justfile</span
+                            ><span class="dots" aria-hidden="true"
+                                ><i></i><i></i><i></i
+                            ></span>
+                        </header>
+                        <pre
+                            tabindex="0"
+                        ><span class="k">just</span>              <span class="c"># list every recipe</span>
+<span class="k">just</span> test         <span class="c"># unit suite</span>
+<span class="k">just</span> test-docs    <span class="c"># this site, in Chromium and Firefox</span>
+<span class="k">just</span> lint         <span class="c"># eslint, prettier, gschema, shellcheck</span>
+<span class="k">just</span> ci           <span class="c"># what CI runs: lint, tests, security, build</span>
+<span class="k">just</span> test-live    <span class="c"># headless gnome-shell, bundle and live-bus checks</span>
+<span class="k">just</span> mpris-check  <span class="c"># list the players on this session bus</span>
+<span class="k">just</span> fake-player  <span class="c"># put a test player on the bus</span>
+<span class="k">just</span> docs         <span class="c"># serve this site on localhost:8000</span></pre>
+                    </div>
+                    <h3>Testing</h3>
+                    <p>
+                        The unit suite runs on Node with the Shell’s modules replaced by
+                        recording stubs. <code>just test-live</code> adds what CI cannot
+                        have: it boots a headless GNOME Shell with a fake player on a
+                        private bus, and checks that the tile picks up a new player,
+                        follows a pause, drops a player that quits, and survives a
+                        disable and re-enable with no JavaScript errors or leaked
+                        sources.
+                    </p>
+                </section>
+
+                <section
+                    class="section"
+                    id="releasing"
+                    aria-labelledby="releasing-title"
+                >
+                    <p class="kicker">08</p>
+                    <h2 id="releasing-title">Releasing</h2>
+                    <p>
+                        Set the version in <code>metadata.json</code> and
+                        <code>package.json</code>, commit, tag and push. The release
+                        workflow checks the tag against both files before building.
+                    </p>
+                    <div class="code night">
+                        <header>
+                            <span>Shell</span
+                            ><span class="dots" aria-hidden="true"
+                                ><i></i><i></i><i></i
+                            ></span>
+                        </header>
+                        <pre
+                            tabindex="0"
+                        ><span class="p">$ </span><span class="k">git</span> tag v0.1.0
+<span class="p">$ </span><span class="k">git</span> push origin v0.1.0</pre>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer class="foot night">
+            <div class="brand">
+                <img src="assets/emblem.webp" alt="" width="52" height="52" />
+                <div>
+                    <b>Ghost Assembly</b
+                    ><span
+                        >Small, sharp tools for the Linux desktop and the cloud.</span
+                    >
+                </div>
+            </div>
+            <nav aria-label="Footer">
+                <ul>
+                    <li>
+                        <a href="https://ghost-assembly.github.io/">All projects</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/Ghost-Assembly/quickmusic"
+                            >Source</a
+                        >
+                    </li>
+                    <li>
+                        <a href="https://github.com/Ghost-Assembly/quickmusic/releases"
+                            >Releases</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/Ghost-Assembly/quickmusic/blob/main/SECURITY.md"
+                            >Security</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+            <p class="legal">QuickMusic is free software under the GPL-3.0-or-later.</p>
+        </footer>
+    </body>
+</html>
