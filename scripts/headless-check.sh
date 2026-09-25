@@ -68,6 +68,15 @@ if [[ "$enabled" != "['$UUID']" ]]; then
     exit 1
 fi
 
+# And read it back through dconf itself, not gsettings: a gsettings built
+# without the dconf module writes to a keyfile, reads its own write back and
+# passes the guard above, while the Shell reads dconf and sees nothing.
+if [[ "$(dconf read /org/gnome/shell/enabled-extensions)" != "['$UUID']" ]]; then
+    echo "FAIL: gsettings is not writing to dconf; check which gsettings is on PATH" >&2
+    rm -rf "$WORK"
+    exit 1
+fi
+
 # The enable marker is logged at debug level, which GLib drops unless asked
 # for. Without this the shell starts perfectly and the check still fails.
 export G_MESSAGES_DEBUG=all

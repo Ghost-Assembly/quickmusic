@@ -559,6 +559,17 @@ describe('disable', () => {
         expect(liveHandlers.size).toBe(0);
     });
 
+    // The Shell parents the toggle's menu into the quick settings overlay and
+    // never destroys it, so the extension must, or every lock leaks one.
+    it('destroys the tile menu the Shell leaves behind', () => {
+        const { panel, toggle } = setup();
+        const menu = toggle().menu;
+
+        panel.disable();
+
+        expect(menu._wasDestroyed).toBe(true);
+    });
+
     it('ignores a change that arrives after disable', () => {
         const { source, panel } = setup();
         panel.disable();
