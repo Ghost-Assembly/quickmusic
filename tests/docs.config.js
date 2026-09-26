@@ -3,7 +3,7 @@
 
 export default {
     title: 'QuickMusic',
-    site: 'https://ghost-assembly.github.io/quickmusic/',
+    site: 'https://ghost-assembly.com/quickmusic/',
     repo: 'https://github.com/Ghost-Assembly/quickmusic',
 
     // [id, heading], in page order. The contents list must match.
@@ -12,9 +12,11 @@ export default {
         ['install', 'Install'],
         ['players', 'Players'],
         ['preferences', 'Preferences'],
-        ['keyboard', 'Keyboard & mouse'],
+        ['keyboard', 'Keyboard'],
         ['architecture', 'Architecture'],
-        ['development', 'Development'],
+        ['testing', 'Testing'],
+        ['packaging', 'Packaging'],
         ['releasing', 'Releasing'],
+        ['development', 'Development'],
     ],
 };
