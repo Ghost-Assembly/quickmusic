@@ -509,6 +509,7 @@ export class Panel {
             settings: this._settings,
             gettext: this._gettext,
         });
+        this._toggle.connectObject('destroy', () => this._onShellDestroyed(), this);
         this._indicator = new QuickSettings.SystemIndicator();
         this._indicator.quickSettingsItems.push(this._toggle);
         Main.panel.statusArea.quickSettings.addExternalIndicator(this._indicator);
@@ -567,6 +568,7 @@ export class Panel {
             // button, the manager opens the popup whenever the pointer enters
             // it, and the first click only closes it again.
             Main.panel.menuManager.removeMenu(this._button.menu);
+            this._button.connectObject('destroy', () => this._onShellDestroyed(), this);
         }
 
         this._button.sync(this._player, this._settings.get_int(KEYS.PANEL_MAX_CHARS));
@@ -576,7 +578,20 @@ export class Panel {
     }
 
     _destroyButton() {
+        this._button?.disconnectObject(this);
         this._button?.destroy();
+        this._button = null;
+    }
+
+    /**
+     * The Shell destroyed the tile or the top bar item itself, as it does to
+     * every actor when it exits, without a disable. A player can still change
+     * before it is gone, so let go of both: sync() then stops at the missing
+     * tile rather than updating, or recreating, actors that are being torn
+     * down. Our own destroys disconnect first and never come here.
+     */
+    _onShellDestroyed() {
+        this._toggle = null;
         this._button = null;
     }
 
@@ -588,6 +603,7 @@ export class Panel {
 
         // The Shell reparents the toggle into the quick settings grid, so it
         // goes first, then its indicator.
+        this._toggle?.disconnectObject(this);
         this._toggle?.destroy();
         this._toggle = null;
         this._indicator?.destroy();

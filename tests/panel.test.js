@@ -606,6 +606,22 @@ describe('disable', () => {
         expect(() => source.set('spotify')).not.toThrow();
     });
 
+    // As when the Shell exits: it destroys the actors from C, without a
+    // disable, and a player can still change before it is gone.
+    it.each([
+        ['the top bar item', ({ button }) => button()],
+        ['the tile', ({ toggle }) => toggle()],
+    ])('ignores a change after the Shell destroys %s', (_name, actor) => {
+        const world = setup();
+        world.source.set('spotify');
+
+        actor(world).destroy();
+
+        expect(() =>
+            world.source.set('spotify', { PlaybackStatus: 'Paused' }),
+        ).not.toThrow();
+    });
+
     it('can be enabled again', () => {
         const { source, panel, button } = setup();
         panel.disable();
