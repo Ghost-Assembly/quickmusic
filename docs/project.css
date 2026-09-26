@@ -1,0 +1,8 @@
+/*
+ * QuickMusic's additions to the shared Ghost Assembly docs template.
+ *
+ * style.css is the template and is kept byte-identical across the quick*
+ * sites; what only this site needs lives here, loaded after it. QuickMusic's
+ * drawing needs nothing beyond the template's today, so this file is empty
+ * but linked, ready for the first rule that does.
+ */
