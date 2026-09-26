@@ -33,10 +33,12 @@ export default class QuickMusicExtension extends Extension {
     }
 
     disable() {
-        // Ordered. The watcher goes first so no bus signal can reach a panel
-        // that is being taken apart.
-        this._source?.destroy();
+        // Ordered, matching quickrem's documented rationale (its indicator
+        // before its store): the panel holds the source's onChange callback,
+        // so it goes first. The other order leaves the source calling back
+        // into a panel that is already being torn down.
         this._panel?.disable();
+        this._source?.destroy();
 
         this._source = null;
         this._panel = null;
