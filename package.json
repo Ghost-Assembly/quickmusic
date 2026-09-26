@@ -1,7 +1,7 @@
 {
     "name": "quickmusic",
     "version": "0.1.0",
-    "description": "Now playing and play/pause in GNOME quick settings",
+    "description": "What is playing, in Quick Settings and the top bar, with play/pause, previous and next for any MPRIS player.",
     "license": "GPL-3.0-or-later",
     "private": true,
     "type": "module",

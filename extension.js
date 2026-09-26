@@ -33,10 +33,13 @@ export default class QuickMusicExtension extends Extension {
     }
 
     disable() {
-        // Ordered. The watcher goes first so no bus signal can reach a panel
-        // that is being taken apart.
-        this._source?.destroy();
+        // Ordered as the sibling repos are: the panel goes first, then the
+        // source. Not what makes this safe, though — Panel.sync() returns as
+        // soon as its toggle is gone, and MprisWatcher.destroy() nulls its
+        // onChange callback before releasing anything, so either order would
+        // leave no callback for a torn-down panel to receive.
         this._panel?.disable();
+        this._source?.destroy();
 
         this._source = null;
         this._panel = null;

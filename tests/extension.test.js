@@ -92,6 +92,26 @@ describe('QuickMusicExtension', () => {
         expect(Main.statusItems.size).toBe(0);
     });
 
+    // quickrem/extension.js documents the rationale: the panel holds the
+    // source's onChange callback, so tearing the source down first would let
+    // a bus signal call back into a panel that is mid-teardown. The panel
+    // must go first, same as quickrem's indicator does before its store.
+    it('destroys the panel before the source', async () => {
+        const { extension } = await load();
+        extension.enable();
+        const order = [];
+        vi.spyOn(extension._panel, 'disable').mockImplementation(() => {
+            order.push('panel');
+        });
+        vi.spyOn(sources[0], 'destroy').mockImplementation(() => {
+            order.push('source');
+        });
+
+        extension.disable();
+
+        expect(order).toEqual(['panel', 'source']);
+    });
+
     // The shape scripts/headless-check.sh exercises against a real Shell.
     it('can be enabled, disabled and enabled again', async () => {
         const { extension, Main } = await load();

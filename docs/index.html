@@ -6,7 +6,7 @@
         <title>QuickMusic · Ghost Assembly</title>
         <meta
             name="description"
-            content="QuickMusic shows what is playing in the GNOME quick settings menu and the top bar, for any MPRIS player — Spotify, browsers, Rhythmbox, VLC and the rest."
+            content="QuickMusic shows what is playing in Quick Settings and the top bar, for any MPRIS player — Spotify, browsers, Rhythmbox, VLC and the rest."
         />
         <meta name="color-scheme" content="dark light" />
         <meta name="theme-color" content="#03030a" />
@@ -20,21 +20,19 @@
             crossorigin
         />
         <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="project.css" />
 
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Ghost Assembly" />
         <meta property="og:title" content="QuickMusic" />
         <meta
             property="og:description"
-            content="What is playing, in the GNOME quick settings menu and the top bar."
+            content="What is playing, in Quick Settings and the top bar."
         />
-        <meta
-            property="og:url"
-            content="https://ghost-assembly.github.io/quickmusic/"
-        />
+        <meta property="og:url" content="https://ghost-assembly.com/quickmusic/" />
         <meta
             property="og:image"
-            content="https://ghost-assembly.github.io/quickmusic/assets/og-image.png"
+            content="https://ghost-assembly.com/quickmusic/assets/og-image.png"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -93,8 +91,7 @@
                     <p class="eyebrow">GNOME Shell extension</p>
                     <h1 id="title">QuickMusic</h1>
                     <p class="tagline">
-                        What is playing, in the GNOME quick settings menu and the top
-                        bar.
+                        What is playing, in Quick Settings and the top bar.
                     </p>
                     <p class="lede">
                         Shows the current track from any MPRIS player — Spotify
@@ -137,7 +134,7 @@
                 <figure
                     class="shot"
                     role="img"
-                    aria-label="QuickMusic in GNOME: the top bar reads “Foo Fighters – My Hero”, and the quick settings tile is open on Spotify with cover art, previous, pause and next, Open Spotify and the player picker."
+                    aria-label="QuickMusic in GNOME: the top bar reads “Foo Fighters – My Hero”, and the Quick Settings tile is open on Spotify with cover art, previous, pause and next, Open Spotify and the player picker."
                 >
                     <div class="gtop">
                         <span class="ws"><i></i><i></i><i></i></span>
@@ -385,9 +382,7 @@
                         <a href="#preferences"><span class="n">04</span>Preferences</a>
                     </li>
                     <li>
-                        <a href="#keyboard"
-                            ><span class="n">05</span>Keyboard &amp; mouse</a
-                        >
+                        <a href="#keyboard"><span class="n">05</span>Keyboard</a>
                     </li>
                     <li>
                         <a href="#architecture"
@@ -395,10 +390,16 @@
                         >
                     </li>
                     <li>
-                        <a href="#development"><span class="n">07</span>Development</a>
+                        <a href="#testing"><span class="n">07</span>Testing</a>
                     </li>
                     <li>
-                        <a href="#releasing"><span class="n">08</span>Releasing</a>
+                        <a href="#packaging"><span class="n">08</span>Packaging</a>
+                    </li>
+                    <li>
+                        <a href="#releasing"><span class="n">09</span>Releasing</a>
+                    </li>
+                    <li>
+                        <a href="#development"><span class="n">10</span>Development</a>
                     </li>
                 </ol>
                 <ul class="toc-links">
@@ -445,7 +446,7 @@
                         >
                     </li>
                     <li>
-                        <a href="https://ghost-assembly.github.io/">
+                        <a href="https://ghost-assembly.com/">
                             <svg
                                 width="15"
                                 height="15"
@@ -500,9 +501,7 @@
                             >
                         </li>
                         <li>
-                            <a href="#keyboard"
-                                ><span class="n">05</span>Keyboard &amp; mouse</a
-                            >
+                            <a href="#keyboard"><span class="n">05</span>Keyboard</a>
                         </li>
                         <li>
                             <a href="#architecture"
@@ -510,12 +509,18 @@
                             >
                         </li>
                         <li>
-                            <a href="#development"
-                                ><span class="n">07</span>Development</a
-                            >
+                            <a href="#testing"><span class="n">07</span>Testing</a>
                         </li>
                         <li>
-                            <a href="#releasing"><span class="n">08</span>Releasing</a>
+                            <a href="#packaging"><span class="n">08</span>Packaging</a>
+                        </li>
+                        <li>
+                            <a href="#releasing"><span class="n">09</span>Releasing</a>
+                        </li>
+                        <li>
+                            <a href="#development"
+                                ><span class="n">10</span>Development</a
+                            >
                         </li>
                     </ol>
                 </details>
@@ -524,7 +529,7 @@
                     <p class="kicker">01</p>
                     <h2 id="overview-title">Overview</h2>
                     <p class="lead">
-                        QuickMusic adds one tile to quick settings and, while something
+                        QuickMusic adds one tile to Quick Settings and, while something
                         plays or is paused, one item to the top bar. It reads the
                         standard MPRIS interface players already publish on the session
                         bus, so there is nothing else to install.
@@ -554,7 +559,7 @@
                                         rx="2"
                                     /></svg
                             ></span>
-                            <h3>Quick settings tile</h3>
+                            <h3>Quick Settings tile</h3>
                             <p>
                                 Title and artist; click to play or pause. The arrow
                                 opens cover art, album, previous / play-pause / next,
@@ -793,14 +798,14 @@
                             <tr>
                                 <th scope="col">Setting</th>
                                 <th scope="col">Default</th>
-                                <th scope="col">Notes</th>
+                                <th scope="col">Note</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td data-label="Setting">Show in the top bar</td>
                                 <td data-label="Default">On</td>
-                                <td data-label="Notes" class="muted">
+                                <td data-label="Note" class="muted">
                                     Hidden while nothing is playing or paused, either
                                     way.
                                 </td>
@@ -808,15 +813,15 @@
                             <tr>
                                 <td data-label="Setting">Top bar label width</td>
                                 <td data-label="Default">40 characters</td>
-                                <td data-label="Notes" class="muted">
+                                <td data-label="Note" class="muted">
                                     10 to 120. Longer text is cut with an ellipsis.
                                 </td>
                             </tr>
                             <tr>
                                 <td data-label="Setting">Pinned player</td>
                                 <td data-label="Default">None</td>
-                                <td data-label="Notes" class="muted">
-                                    Set from the quick settings picker; “Forget” clears
+                                <td data-label="Note" class="muted">
+                                    Set from the Quick Settings picker; “Forget” clears
                                     it.
                                 </td>
                             </tr>
@@ -826,7 +831,7 @@
 
                 <section class="section" id="keyboard" aria-labelledby="keyboard-title">
                     <p class="kicker">05</p>
-                    <h2 id="keyboard-title">Keyboard &amp; mouse</h2>
+                    <h2 id="keyboard-title">Keyboard</h2>
                     <p>The top bar item works without a mouse once it has focus.</p>
                     <table class="table">
                         <thead>
@@ -885,9 +890,11 @@
                     <p class="kicker">06</p>
                     <h2 id="architecture-title">Architecture</h2>
                     <p>
-                        Every decision lives in one pure module. The files around it
-                        only move data between it and the bus or the Shell, so the suite
-                        can test the decisions on plain Node.
+                        <code>extension.js</code> is deliberately thin: it builds the
+                        MPRIS watcher and the panel on enable, and tears both down on
+                        disable. Every decision lives in one pure module; the files
+                        around it only move data between it and the bus or the Shell, so
+                        the suite can test the decisions on plain Node.
                     </p>
                     <div
                         class="diagram"
@@ -990,12 +997,120 @@
                     </div>
                 </section>
 
+                <section class="section" id="testing" aria-labelledby="testing-title">
+                    <p class="kicker">07</p>
+                    <h2 id="testing-title">Testing</h2>
+                    <p>
+                        The unit suite runs on Node with the Shell’s modules replaced by
+                        recording stubs. <code>just test-live</code> adds what CI cannot
+                        have: it boots a headless GNOME Shell with a fake player on a
+                        private bus, and checks that the tile picks up a new player,
+                        follows a pause, drops a player that quits, and survives a
+                        disable and re-enable with no JavaScript error. It then checks
+                        the shell log for two kinds of leak: signal or object lifetime
+                        warnings, and a <code>GSource</code> that outlived the disable
+                        (a <code>Source ID … was not found</code> or
+                        <code>GSource … still active</code> line). It then runs the
+                        packaging check below. <code>just test-docs</code> holds this
+                        site to its rules in Chromium and Firefox: accessibility in both
+                        color schemes, no JavaScript, no other origin, and no sideways
+                        scrolling on a phone.
+                    </p>
+                    <p>
+                        <strong
+                            ><code>modules/mpris.js</code> and
+                            <code>prefs.js</code> have no coverage</strong
+                        >, by design. <code>mpris.js</code> is Gio D-Bus plumbing; every
+                        decision about what a player’s properties mean lives in
+                        <code>modules/model.js</code> and is tested there instead. It is
+                        checked against the real session bus by
+                        <code>just mpris-check</code>, and against
+                        <code>scripts/fake-player.js</code> by
+                        <code>just test-live</code>. <code>prefs.js</code> holds only
+                        Adw and Gtk widget construction; the key list and wording it
+                        shows live in <code>modules/settings.js</code>, tested on plain
+                        Node. The exclusion is written in both
+                        <code>vitest.config.js</code> and
+                        <code>sonar-project.properties</code> so the two agree.
+                    </p>
+                </section>
+
+                <section
+                    class="section"
+                    id="packaging"
+                    aria-labelledby="packaging-title"
+                >
+                    <p class="kicker">08</p>
+                    <h2 id="packaging-title">Packaging</h2>
+                    <p>
+                        An extension ships as a plain zip, conventionally named
+                        <code>&lt;uuid&gt;.shell-extension.zip</code>, with
+                        <code>metadata.json</code> at the archive root.
+                        <code>just build</code> makes it with <code>zip</code> rather
+                        than GNOME’s <code>gnome-extensions pack</code>, because that
+                        tool comes with the <code>gnome-shell</code> package and CI has
+                        no GNOME.
+                    </p>
+                    <p>
+                        The official packer stays the authority all the same:
+                        <code>just pack-check</code> runs it and fails on any difference
+                        from the built zip, so the two cannot drift.
+                    </p>
+                    <p>
+                        <strong>Every shipped icon is decoded, not just packed.</strong>
+                        An icon that fails to load is silent — the Shell draws nothing
+                        and logs nothing. A comment placed before the
+                        <code>&lt;svg&gt;</code> element is enough to defeat
+                        gdk-pixbuf’s format sniffing, so the pack check loads each icon
+                        and fails if it does not decode to something visible.
+                    </p>
+                </section>
+
+                <section
+                    class="section"
+                    id="releasing"
+                    aria-labelledby="releasing-title"
+                >
+                    <p class="kicker">09</p>
+                    <h2 id="releasing-title">Releasing</h2>
+                    <p>
+                        Set <code>version-name</code> in <code>metadata.json</code> and
+                        <code>version</code> in <code>package.json</code>, commit, then
+                        tag and push. Run <code>just test-live</code> first: neither the
+                        headless check nor the packer check runs in CI.
+                    </p>
+                    <div class="code night">
+                        <header>
+                            <span>Shell</span
+                            ><span class="dots" aria-hidden="true"
+                                ><i></i><i></i><i></i
+                            ></span>
+                        </header>
+                        <pre
+                            tabindex="0"
+                        ><span class="p">$ </span><span class="k">git</span> tag -a v0.1.0 -m 'release v0.1.0'
+<span class="p">$ </span><span class="k">git</span> push origin v0.1.0</pre>
+                    </div>
+                    <p>
+                        The release workflow checks the tag against both files and stops
+                        before building if they disagree — a release whose zip tells
+                        GNOME it is another version is worse than none. It then runs
+                        <code>just ci</code> and attaches the zip to a GitHub release.
+                    </p>
+                    <p>
+                        Uploading to extensions.gnome.org is deliberately left out of
+                        CI. <code>gnome-extensions upload</code> authenticates with the
+                        account password rather than a scoped token, and every upload
+                        goes to human review anyway.
+                    </p>
+                </section>
+
                 <section
                     class="section"
                     id="development"
                     aria-labelledby="development-title"
                 >
-                    <p class="kicker">07</p>
+                    <p class="kicker">10</p>
                     <h2 id="development-title">Development</h2>
                     <div class="code night">
                         <header>
@@ -1010,47 +1125,11 @@
 <span class="k">just</span> test         <span class="c"># unit suite</span>
 <span class="k">just</span> test-docs    <span class="c"># this site, in Chromium and Firefox</span>
 <span class="k">just</span> lint         <span class="c"># eslint, prettier, gschema, shellcheck</span>
-<span class="k">just</span> ci           <span class="c"># what CI runs: lint, tests, security, build</span>
+<span class="k">just</span> ci           <span class="c"># what CI runs: lint, test, test-docs, security, build</span>
 <span class="k">just</span> test-live    <span class="c"># headless gnome-shell, bundle and live-bus checks</span>
 <span class="k">just</span> mpris-check  <span class="c"># list the players on this session bus</span>
 <span class="k">just</span> fake-player  <span class="c"># put a test player on the bus</span>
 <span class="k">just</span> docs         <span class="c"># serve this site on localhost:8000</span></pre>
-                    </div>
-                    <h3>Testing</h3>
-                    <p>
-                        The unit suite runs on Node with the Shell’s modules replaced by
-                        recording stubs. <code>just test-live</code> adds what CI cannot
-                        have: it boots a headless GNOME Shell with a fake player on a
-                        private bus, and checks that the tile picks up a new player,
-                        follows a pause, drops a player that quits, and survives a
-                        disable and re-enable with no JavaScript errors or leaked
-                        sources.
-                    </p>
-                </section>
-
-                <section
-                    class="section"
-                    id="releasing"
-                    aria-labelledby="releasing-title"
-                >
-                    <p class="kicker">08</p>
-                    <h2 id="releasing-title">Releasing</h2>
-                    <p>
-                        Set the version in <code>metadata.json</code> and
-                        <code>package.json</code>, commit, tag and push. The release
-                        workflow checks the tag against both files before building.
-                    </p>
-                    <div class="code night">
-                        <header>
-                            <span>Shell</span
-                            ><span class="dots" aria-hidden="true"
-                                ><i></i><i></i><i></i
-                            ></span>
-                        </header>
-                        <pre
-                            tabindex="0"
-                        ><span class="p">$ </span><span class="k">git</span> tag v0.1.0
-<span class="p">$ </span><span class="k">git</span> push origin v0.1.0</pre>
                     </div>
                 </section>
             </main>
@@ -1069,7 +1148,7 @@
             <nav aria-label="Footer">
                 <ul>
                     <li>
-                        <a href="https://ghost-assembly.github.io/">All projects</a>
+                        <a href="https://ghost-assembly.com/">All projects</a>
                     </li>
                     <li>
                         <a href="https://github.com/Ghost-Assembly/quickmusic"
