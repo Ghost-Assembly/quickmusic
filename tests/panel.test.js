@@ -357,14 +357,43 @@ describe('the top bar item', () => {
         expect(Main.statusItems.get('quickmusic').box).toBe('right');
     });
 
-    it('is hidden while nothing is playing', () => {
+    it('is hidden with no player, and once the player stops', () => {
         const { source, button } = setup();
         expect(button().visible).toBe(false);
 
         source.set('spotify');
-        source.set('spotify', { PlaybackStatus: 'Paused' });
+        source.set('spotify', { PlaybackStatus: 'Stopped' });
 
         expect(button().visible).toBe(false);
+    });
+
+    // Otherwise the click that paused it would take away the way to resume.
+    it('stays visible while paused, to resume from', () => {
+        const { source, button } = setup();
+        source.set('spotify');
+        const [primary] = button().actions;
+
+        source.set('spotify', { PlaybackStatus: 'Paused' });
+
+        expect(button().visible).toBe(true);
+        const icon = descendants(button()).find(child => child.icon_name);
+        expect(icon.icon_name).toBe('media-playback-start-symbolic');
+        primary.recognize();
+        expect(source.calls).toEqual([['playPause', SPOTIFY]]);
+    });
+
+    // The real manager opens a managed menu when the pointer enters its
+    // source actor while another managed menu of that actor has the event.
+    // With the dummy still registered, the popup opened on hover and the
+    // first click only closed it.
+    it('leaves its popup the only managed menu for it', () => {
+        const { source, button } = setup();
+        source.set('spotify');
+
+        const menus = Main.managedMenus.filter(menu => menu.sourceActor === button());
+
+        expect(menus).toHaveLength(1);
+        expect(menus[0].dummy).toBeUndefined();
     });
 
     it('closes its popup when it hides', () => {
@@ -373,7 +402,7 @@ describe('the top bar item', () => {
         const popup = Main.managedMenus.at(-1);
         popup.open();
 
-        source.set('spotify', { PlaybackStatus: 'Paused' });
+        source.set('spotify', { PlaybackStatus: 'Stopped' });
 
         expect(popup.isOpen).toBe(false);
     });
@@ -575,6 +604,22 @@ describe('disable', () => {
         panel.disable();
 
         expect(() => source.set('spotify')).not.toThrow();
+    });
+
+    // As when the Shell exits: it destroys the actors from C, without a
+    // disable, and a player can still change before it is gone.
+    it.each([
+        ['the top bar item', ({ button }) => button()],
+        ['the tile', ({ toggle }) => toggle()],
+    ])('ignores a change after the Shell destroys %s', (_name, actor) => {
+        const world = setup();
+        world.source.set('spotify');
+
+        actor(world).destroy();
+
+        expect(() =>
+            world.source.set('spotify', { PlaybackStatus: 'Paused' }),
+        ).not.toThrow();
     });
 
     it('can be enabled again', () => {

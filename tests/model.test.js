@@ -385,9 +385,10 @@ describe('ellipsize', () => {
 describe('panelVisible', () => {
     it.each([
         [true, 'Playing', true],
-        [true, 'Paused', false],
+        [true, 'Paused', true],
         [true, 'Stopped', false],
         [false, 'Playing', false],
+        [false, 'Paused', false],
     ])('enabled=%s status=%s -> %s', (enabled, status, expected) => {
         expect(panelVisible({ enabled, player: player(SPOTIFY, status) })).toBe(
             expected,
