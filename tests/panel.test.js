@@ -382,6 +382,20 @@ describe('the top bar item', () => {
         expect(source.calls).toEqual([['playPause', SPOTIFY]]);
     });
 
+    // The real manager opens a managed menu when the pointer enters its
+    // source actor while another managed menu of that actor has the event.
+    // With the dummy still registered, the popup opened on hover and the
+    // first click only closed it.
+    it('leaves its popup the only managed menu for it', () => {
+        const { source, button } = setup();
+        source.set('spotify');
+
+        const menus = Main.managedMenus.filter(menu => menu.sourceActor === button());
+
+        expect(menus).toHaveLength(1);
+        expect(menus[0].dummy).toBeUndefined();
+    });
+
     it('closes its popup when it hides', () => {
         const { source } = setup();
         source.set('spotify');

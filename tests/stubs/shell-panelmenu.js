@@ -14,7 +14,10 @@ class Button extends FakeActor {
         this.menuAlignment = menuAlignment;
         this.accessible_name = nameText ?? '';
         this.dontCreateMenu = dontCreateMenu;
-        this.menu = dontCreateMenu ? null : new FakeActor();
+        // As PopupDummyMenu: its actor is the button itself.
+        this.menu = dontCreateMenu
+            ? { dummy: true, sourceActor: this, actor: this }
+            : new FakeActor();
         this.connect('destroy', () => this._onDestroy());
     }
 

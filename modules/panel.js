@@ -562,6 +562,11 @@ export class Panel {
                 gettext: this._gettext,
             });
             Main.panel.addToStatusArea(ROLE, this._button, 0, 'right');
+            // addToStatusArea registers the button's dummy menu, whose actor
+            // is the button itself. With the popup registered for the same
+            // button, the manager opens the popup whenever the pointer enters
+            // it, and the first click only closes it again.
+            Main.panel.menuManager.removeMenu(this._button.menu);
         }
 
         this._button.sync(this._player, this._settings.get_int(KEYS.PANEL_MAX_CHARS));

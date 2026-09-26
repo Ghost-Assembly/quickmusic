@@ -31,8 +31,9 @@ export const uiGroup = {
 export const panel = {
     statusArea: { quickSettings },
 
-    // As the real Panel: one item per role, and the role is freed when the
-    // item is destroyed.
+    // As the real Panel: one item per role, the role is freed when the item
+    // is destroyed, and the item's menu — a dummy one too — goes to the menu
+    // manager.
     addToStatusArea(role, indicator, position, box) {
         if (statusItems.has(role))
             throw new Error(
@@ -40,12 +41,17 @@ export const panel = {
             );
         statusItems.set(role, { indicator, position, box });
         indicator.connect('destroy', () => statusItems.delete(role));
+        if (indicator.menu) panel.menuManager.addMenu(indicator.menu);
         return indicator;
     },
 
     menuManager: {
         addMenu(menu) {
-            managedMenus.push(menu);
+            if (!managedMenus.includes(menu)) managedMenus.push(menu);
+        },
+        removeMenu(menu) {
+            const index = managedMenus.indexOf(menu);
+            if (index !== -1) managedMenus.splice(index, 1);
         },
     },
 };
