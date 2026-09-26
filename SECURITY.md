@@ -1,4 +1,4 @@
-# Security policy
+# QuickMusic security policy
 
 ## Supported versions
 
