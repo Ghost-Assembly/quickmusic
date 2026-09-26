@@ -15,8 +15,8 @@ architecture, testing, packaging and releasing.
   opens cover art, album, previous / play-pause / next, "Open ‹player›", and a
   player picker. A pinned player that is not running stays listed, marked
   "(not running)", so the pin can be seen and undone.
-- **Top bar item.** "Artist – Title" while something is playing, hidden
-  otherwise. Left-click plays and pauses; right-click opens the same controls.
+- **Top bar item.** "Artist – Title" while something is playing or paused,
+  hidden otherwise. Left-click plays and pauses; right-click opens the same controls.
   From the keyboard, Enter or Space plays and pauses and the Menu key (or
   Shift+F10) opens the controls.
 - **Follows the active player.** Whichever started playing most recently, and
@@ -54,7 +54,7 @@ Wayland, log out and back in.
 
 | Setting             | Default       |                                                        |
 | ------------------- | ------------- | ------------------------------------------------------ |
-| Show in the top bar | on            | Hidden while nothing is playing, either way            |
+| Show in the top bar | on            | Hidden while nothing is playing or paused, either way  |
 | Top bar label width | 40 characters | Longer text is cut with an ellipsis                    |
 | Pinned player       | none          | Set from the quick settings picker; "Forget" clears it |
 

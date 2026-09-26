@@ -249,13 +249,14 @@ export function formatLabel(track, fallback) {
 /**
  * Whether the top bar item shows.
  *
- * Only while something is playing: a paused track in the top bar is clutter,
- * and the quick settings tile is still there to resume it from.
+ * While something is playing or paused, so the click that paused it can
+ * resume it. A stopped player, or none, leaves nothing to resume there.
  *
  * @param {{enabled: boolean, player: object|null}} state The setting and the
  *   selected player.
  * @returns {boolean} True to show it.
  */
 export function panelVisible({ enabled, player }) {
-    return Boolean(enabled && player?.status === 'Playing');
+    const status = player?.status;
+    return Boolean(enabled && (status === 'Playing' || status === 'Paused'));
 }

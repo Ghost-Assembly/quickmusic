@@ -7,8 +7,9 @@
       <default>true</default>
       <summary>Show the track in the top bar</summary>
       <description>
-        Show the playing track's artist and title in the top bar. The item is
-        hidden while nothing is playing, whatever this is set to.
+        Show the current track's artist and title in the top bar while it is
+        playing or paused. The item is hidden when the player stops or none is
+        running, whatever this is set to.
       </description>
     </key>
 

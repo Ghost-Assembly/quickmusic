@@ -27,7 +27,7 @@ export const SETTINGS = Object.freeze([
         key: KEYS.SHOW_PANEL_INDICATOR,
         type: 'b',
         label: 'Show in the top bar',
-        detail: 'Artist and title in the top bar, hidden while nothing is playing',
+        detail: 'Artist and title in the top bar while playing or paused',
     }),
     Object.freeze({
         key: KEYS.PANEL_MAX_CHARS,
