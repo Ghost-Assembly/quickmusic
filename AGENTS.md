@@ -95,8 +95,12 @@ from `just setup`.
 - `just test-live` (`scripts/headless-check.sh`): boots a throwaway headless
   GNOME Shell, puts `scripts/fake-player.js` on a private session bus, and
   checks the tile picks up a new player, follows a pause, drops a player that
-  quits, and survives a disable and re-enable with no JavaScript error or
-  leaked signal. Then `scripts/pack-check.sh`: the built zip must match what
+  quits, and survives a disable and re-enable with no JavaScript error. Two
+  leak checks run after the re-enable: the shell log must show no signal or
+  object lifetime warnings (`No signal handler`, `instance with invalid`,
+  `Object … has been already deallocated`) and no outlived `GSource`
+  (`Source ID … was not found`, `GSource … still active`). Then
+  `scripts/pack-check.sh`: the built zip must match what
   `gnome-extensions pack` produces, `metadata.json` must sit at the archive
   root, and every icon in `icons/` must actually decode.
 - `just test-docs` (Playwright, Chromium and Firefox): this site's rules —

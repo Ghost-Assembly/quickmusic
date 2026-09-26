@@ -798,14 +798,14 @@
                             <tr>
                                 <th scope="col">Setting</th>
                                 <th scope="col">Default</th>
-                                <th scope="col">Notes</th>
+                                <th scope="col">Note</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td data-label="Setting">Show in the top bar</td>
                                 <td data-label="Default">On</td>
-                                <td data-label="Notes" class="muted">
+                                <td data-label="Note" class="muted">
                                     Hidden while nothing is playing or paused, either
                                     way.
                                 </td>
@@ -813,14 +813,14 @@
                             <tr>
                                 <td data-label="Setting">Top bar label width</td>
                                 <td data-label="Default">40 characters</td>
-                                <td data-label="Notes" class="muted">
+                                <td data-label="Note" class="muted">
                                     10 to 120. Longer text is cut with an ellipsis.
                                 </td>
                             </tr>
                             <tr>
                                 <td data-label="Setting">Pinned player</td>
                                 <td data-label="Default">None</td>
-                                <td data-label="Notes" class="muted">
+                                <td data-label="Note" class="muted">
                                     Set from the Quick Settings picker; “Forget” clears
                                     it.
                                 </td>
@@ -1006,12 +1006,15 @@
                         have: it boots a headless GNOME Shell with a fake player on a
                         private bus, and checks that the tile picks up a new player,
                         follows a pause, drops a player that quits, and survives a
-                        disable and re-enable with no JavaScript errors or leaked
-                        sources. It then runs the packaging check below.
-                        <code>just test-docs</code> holds this site to its rules in
-                        Chromium and Firefox: accessibility in both color schemes, no
-                        JavaScript, no other origin, and no sideways scrolling on a
-                        phone.
+                        disable and re-enable with no JavaScript error. It then checks
+                        the shell log for two kinds of leak: signal or object lifetime
+                        warnings, and a <code>GSource</code> that outlived the disable
+                        (a <code>Source ID … was not found</code> or
+                        <code>GSource … still active</code> line). It then runs the
+                        packaging check below. <code>just test-docs</code> holds this
+                        site to its rules in Chromium and Firefox: accessibility in both
+                        color schemes, no JavaScript, no other origin, and no sideways
+                        scrolling on a phone.
                     </p>
                     <p>
                         <strong
