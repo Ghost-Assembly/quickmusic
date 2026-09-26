@@ -33,10 +33,11 @@ export default class QuickMusicExtension extends Extension {
     }
 
     disable() {
-        // Ordered, matching quickrem's documented rationale (its indicator
-        // before its store): the panel holds the source's onChange callback,
-        // so it goes first. The other order leaves the source calling back
-        // into a panel that is already being torn down.
+        // Ordered as the sibling repos are: the panel goes first, then the
+        // source. Not what makes this safe, though — Panel.sync() returns as
+        // soon as its toggle is gone, and MprisWatcher.destroy() nulls its
+        // onChange callback before releasing anything, so either order would
+        // leave no callback for a torn-down panel to receive.
         this._panel?.disable();
         this._source?.destroy();
 
