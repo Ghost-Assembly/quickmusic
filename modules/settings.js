@@ -39,7 +39,7 @@ export const SETTINGS = Object.freeze([
         key: KEYS.PINNED_PLAYER,
         type: 's',
         label: 'Pinned player',
-        detail: 'Chosen from the quick settings menu; empty follows the active player',
+        detail: 'Chosen from the Quick Settings menu; empty follows the active player',
     }),
 ]);
 

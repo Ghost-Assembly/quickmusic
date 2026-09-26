@@ -1,17 +1,18 @@
 # QuickMusic
 
-What is playing, in the GNOME quick settings menu and the top bar.
+What is playing, in Quick Settings and the top bar, with play/pause, previous
+and next for any MPRIS player.
 
 Shows the current track from any MPRIS player — Spotify (including the
 Flatpak), browsers, Rhythmbox, VLC and the rest — with play/pause, previous,
 next and a button to bring the player to the front.
 
-**[Documentation →](https://ghost-assembly.github.io/quickmusic/)** —
+**[Documentation →](https://ghost-assembly.com/quickmusic/)** —
 architecture, testing, packaging and releasing.
 
 ## What it does
 
-- **Quick settings tile.** Title and artist; click to play or pause. The arrow
+- **Quick Settings tile.** Title and artist; click to play or pause. The arrow
   opens cover art, album, previous / play-pause / next, "Open ‹player›", and a
   player picker. A pinned player that is not running stays listed, marked
   "(not running)", so the pin can be seen and undone.
@@ -52,20 +53,20 @@ Wayland, log out and back in.
 
 ## Preferences
 
-| Setting             | Default       |                                                        |
+| Setting             | Default       | Note                                                   |
 | ------------------- | ------------- | ------------------------------------------------------ |
 | Show in the top bar | on            | Hidden while nothing is playing or paused, either way  |
-| Top bar label width | 40 characters | Longer text is cut with an ellipsis                    |
-| Pinned player       | none          | Set from the quick settings picker; "Forget" clears it |
+| Top bar label width | 40 characters | 10 to 120. Longer text is cut with an ellipsis         |
+| Pinned player       | none          | Set from the Quick Settings picker; "Forget" clears it |
 
-## Develop
+## Development
 
 ```bash
 just              # list every recipe
 just test         # unit suite
 just test-docs    # the docs site in Chromium and Firefox
 just lint         # eslint, prettier, gschema, shellcheck
-just ci           # what CI runs: lint, tests, security, build
+just ci           # what CI runs: lint, test, test-docs, security, build
 just test-live    # headless gnome-shell, bundle and live-bus checks
 just mpris-check  # list the players on this session bus
 just fake-player  # put a test player on the bus
@@ -75,13 +76,18 @@ just docs         # serve the documentation site
 The suite runs on plain Node. Every decision lives in `modules/model.js`, which
 imports nothing; `modules/mpris.js` is D-Bus plumbing only and is checked
 against a real bus by `just test-live` — see the
-[architecture notes](https://ghost-assembly.github.io/quickmusic/#architecture).
+[architecture notes](https://ghost-assembly.com/quickmusic/#architecture).
 
 ## Releasing
 
-Set the version in `metadata.json` (`version-name`) and `package.json`, commit,
-then tag and push. The release workflow refuses a tag that disagrees with
-either file.
+Set `version-name` in `metadata.json` and `version` in `package.json`, commit,
+then tag and push; the release workflow checks the tag against both files
+before building.
+
+```bash
+git tag -a v0.1.0 -m 'release v0.1.0'
+git push origin v0.1.0
+```
 
 ## License
 
