@@ -291,7 +291,10 @@ const QuickMusicToggle = GObject.registerClass(
                 this.subtitle = '';
             }
             this.checked = player?.status === 'Playing';
-            this.reactive = Boolean(player);
+            // Shell 50.3's QuickMenuToggle._init binds this to _menuButton's
+            // reactivity, so a pin with nothing running keeps the arrow: the
+            // "(not running)" row and Automatic stay reachable from it.
+            this.reactive = Boolean(player || pinnedKey);
 
             const status = {
                 Playing: _('Playing'),

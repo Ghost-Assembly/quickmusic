@@ -136,6 +136,22 @@ describe('the quick settings tile', () => {
         expect(toggle().reactive).toBe(false);
     });
 
+    // Otherwise a pin whose player is not running could never be reached: the
+    // arrow that opens the "(not running)" row and Automatic follows reactive.
+    it('a pin with no players keeps the tile (and so its arrow) reactive', () => {
+        const { toggle } = setup({ [KEYS.PINNED_PLAYER]: 'spotify' });
+
+        expect(toggle().reactive).toBe(true);
+    });
+
+    it('clicking it sends nothing', () => {
+        const { source, toggle } = setup({ [KEYS.PINNED_PLAYER]: 'spotify' });
+
+        toggle().click();
+
+        expect(source.calls).toEqual([]);
+    });
+
     // One name for the empty state, on the tile and in its menu alike.
     it('says no media in the menu too', () => {
         const { toggle } = setup();
