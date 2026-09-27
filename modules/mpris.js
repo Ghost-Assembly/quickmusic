@@ -2,9 +2,10 @@
 // four commands the extension sends them.
 //
 // Only plumbing lives here. Turning properties into something to show is
-// modules/model.js's job, so this file never decides anything a test would
-// want to check — which is why it is excluded from Vitest and exercised
-// instead by scripts/mpris-check.js against the real bus.
+// modules/model.js's job; this file only decides when a player is connected,
+// dropped or still loading — the race logic tests/mpris.test.js exercises
+// against a fake bus. The wire format itself is still checked against a real
+// one, by scripts/mpris-check.js.
 //
 // It imports no resource:// module, so it also runs under plain gjs.
 //
