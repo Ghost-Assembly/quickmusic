@@ -87,11 +87,13 @@ from `just setup`.
 - Write the failing test first.
 - Unit suite (`just test`, vitest): `modules/**`, `extension.js` and
   `prefs.js` are the coverage universe. `prefs.js` (Adw/Gtk widget
-  construction only) and `modules/mpris.js` (D-Bus plumbing, checked instead
-  against a real bus) are excluded — identically in `vitest.config.js` and
-  `sonar-project.properties`, so the two agree. Stubs for `gi://` and
-  `resource:///` imports live in `tests/stubs/`; a small fake Shell world is
-  in `tests/support/`.
+  construction only) is excluded — identically in `vitest.config.js` and
+  `sonar-project.properties`, so the two agree. `modules/mpris.js`'s race
+  logic (a player connecting, quitting or being dropped mid-load) is under
+  test with a fake bus in `tests/mpris.test.js`; the wire format itself is
+  still checked against a real bus, by `scripts/mpris-check.js`. Stubs for
+  `gi://` and `resource:///` imports live in `tests/stubs/`; a small fake
+  Shell world is in `tests/support/`.
 - `just test-live` (`scripts/headless-check.sh`): boots a throwaway headless
   GNOME Shell, puts `scripts/fake-player.js` on a private session bus, and
   checks the tile picks up a new player, follows a pause, drops a player that

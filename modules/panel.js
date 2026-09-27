@@ -78,14 +78,18 @@ function togglePlayback(source, player) {
 }
 
 /**
- * Put a value into a translated "%s" template.
+ * Put values into a translated "%s"/"%d" template, in order.
  *
  * Not String.prototype.format: the Shell installs that, Node does not, and a
  * function replacer keeps a "$&" in a player's name from being read as a
- * replacement pattern.
+ * replacement pattern. One pass over the template, so a value that itself
+ * contains "%s" is never rescanned.
  */
-function fill(template, value) {
-    return template.replace('%s', () => value);
+function fill(template, ...values) {
+    let next = 0;
+    return template.replace(/%[sd]/g, match =>
+        next < values.length ? String(values[next++]) : match,
+    );
 }
 
 /** A single-line label that ellipsizes rather than widening the menu. */
@@ -291,7 +295,10 @@ const QuickMusicToggle = GObject.registerClass(
                 this.subtitle = '';
             }
             this.checked = player?.status === 'Playing';
-            this.reactive = Boolean(player);
+            // Shell 50.3's QuickMenuToggle._init binds this to _menuButton's
+            // reactivity, so a pin with nothing running keeps the arrow: the
+            // "(not running)" row and Automatic stay reachable from it.
+            this.reactive = Boolean(player || pinnedKey);
 
             const status = {
                 Playing: _('Playing'),
