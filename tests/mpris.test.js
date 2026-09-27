@@ -99,11 +99,17 @@ describe('a player removed while its proxies load', () => {
         const pending = takePair(SPOTIFY);
         bus.vanish(SPOTIFY);
 
-        pending.root.resolve(fakeProxy());
-        pending.player.resolve(fakeProxy());
+        const root = fakeProxy();
+        const player = fakeProxy();
+        pending.root.resolve(root);
+        pending.player.resolve(player);
         await flush();
 
         expect(watcher.players).toEqual([]);
+        // "No entry" has to mean nothing was attached, not just that
+        // _entries lost the key: an attached proxy keeps a live
+        // g-properties-changed handler that destroy() would never reach.
+        expect([...root.liveHandlers, ...player.liveHandlers]).toEqual([]);
     });
 });
 
@@ -124,15 +130,18 @@ describe('quit then relaunch under the same name', () => {
         await flush();
         expect(watcher.players.map(player => player.busName)).toEqual([SPOTIFY]);
 
-        old.root.reject(cancelledError());
-        old.player.reject(cancelledError());
+        // _remove() never cancels anything: the old load fails on its own,
+        // typically because the player it was loading for is simply gone.
+        old.root.reject(new Error('org.freedesktop.DBus.Error.NameHasNoOwner'));
+        old.player.reject(new Error('org.freedesktop.DBus.Error.NameHasNoOwner'));
         await flush();
 
         expect(watcher.players.map(player => player.busName)).toEqual([SPOTIFY]);
+        expect(console.warn).toHaveBeenCalledWith(expect.stringContaining(SPOTIFY));
     });
 
     it("the old load's late success does not attach", async () => {
-        const { bus, watcher } = setup();
+        const { bus, watcher, onChange } = setup();
 
         bus.appear(SPOTIFY);
         const old = takePair(SPOTIFY);
@@ -146,12 +155,22 @@ describe('quit then relaunch under the same name', () => {
         );
         await flush();
 
-        old.root.resolve(fakeProxy({ Identity: 'stale' }));
-        old.player.resolve(fakeProxy({ PlaybackStatus: 'Playing', CanControl: true }));
+        const staleRoot = fakeProxy({ Identity: 'stale' });
+        const stalePlayer = fakeProxy({ PlaybackStatus: 'Playing', CanControl: true });
+        old.root.resolve(staleRoot);
+        old.player.resolve(stalePlayer);
         await flush();
 
         expect(watcher.players).toHaveLength(1);
         expect(watcher.players[0].identity).toBe('fresh');
+        // "Does not attach" means no g-properties-changed handler either, not
+        // just that the stale snapshot lost the race.
+        expect([...staleRoot.liveHandlers, ...stalePlayer.liveHandlers]).toEqual([]);
+
+        onChange.mockClear();
+        staleRoot.change();
+        stalePlayer.change();
+        expect(onChange).not.toHaveBeenCalled();
     });
 });
 
@@ -163,11 +182,14 @@ describe('destroy() during a load', () => {
         const pending = takePair(SPOTIFY);
 
         watcher.destroy();
-        pending.root.resolve(fakeProxy());
-        pending.player.resolve(fakeProxy());
+        const root = fakeProxy();
+        const player = fakeProxy();
+        pending.root.resolve(root);
+        pending.player.resolve(player);
         await flush();
 
         expect(watcher.players).toEqual([]);
+        expect([...root.liveHandlers, ...player.liveHandlers]).toEqual([]);
     });
 
     it('does not warn when the load rejects as cancelled', async () => {

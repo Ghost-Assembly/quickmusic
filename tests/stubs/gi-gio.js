@@ -64,11 +64,6 @@ export function fakeProxy(props = {}) {
         get liveHandlers() {
             return [...handlers.keys()];
         },
-
-        PlayPauseAsync: () => Promise.resolve(),
-        NextAsync: () => Promise.resolve(),
-        PreviousAsync: () => Promise.resolve(),
-        RaiseAsync: () => Promise.resolve(),
     };
 }
 
