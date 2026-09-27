@@ -4,10 +4,12 @@ import { createSettings, createSource } from './support/world.js';
 
 /*
  * The one place in this suite that mocks a module rather than injecting a
- * fake. extension.js imports modules/mpris.js, which talks to D-Bus, and
- * vitest.config.js deliberately has no alias for that. Mocking it keeps the
- * tripwire armed while still letting the wiring be tested — and extension.js
- * has no logic of its own beyond that wiring and its teardown order.
+ * fake. extension.js does `new MprisWatcher()` with no bus of its own, which
+ * defaults to Gio.DBus.session — and the fake Gio's DBus.session is null,
+ * since every other test builds its own fake bus and passes it explicitly
+ * (see tests/mpris.test.js). Mocking it here keeps the tripwire armed while
+ * still letting the wiring be tested — and extension.js has no logic of its
+ * own beyond that wiring and its teardown order.
  */
 const sources = [];
 

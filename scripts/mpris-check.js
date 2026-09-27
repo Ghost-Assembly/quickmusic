@@ -1,8 +1,9 @@
 // List the MPRIS players on this session bus through modules/mpris.js.
 //
-// modules/mpris.js is excluded from the unit suite because it is nothing but
-// D-Bus plumbing; this is what checks it instead, against whatever players are
-// actually running. Run by `just mpris-check` and `just test-live`.
+// modules/mpris.js's connect/quit/relaunch race logic is under test in
+// tests/mpris.test.js, against a fake bus. This is what checks the wire
+// format itself instead, against whatever players are actually running. Run
+// by `just mpris-check` and `just test-live`.
 //
 // Exits 0 having printed each player, or 0 with a note when there are none —
 // no players is a fact about the session, not a failure of the code. Exits 1

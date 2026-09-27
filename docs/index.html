@@ -1017,21 +1017,18 @@
                         scrolling on a phone.
                     </p>
                     <p>
-                        <strong
-                            ><code>modules/mpris.js</code> and
-                            <code>prefs.js</code> have no coverage</strong
-                        >, by design. <code>mpris.js</code> is Gio D-Bus plumbing; every
-                        decision about what a player’s properties mean lives in
-                        <code>modules/model.js</code> and is tested there instead. It is
-                        checked against the real session bus by
-                        <code>just mpris-check</code>, and against
-                        <code>scripts/fake-player.js</code> by
-                        <code>just test-live</code>. <code>prefs.js</code> holds only
-                        Adw and Gtk widget construction; the key list and wording it
-                        shows live in <code>modules/settings.js</code>, tested on plain
-                        Node. The exclusion is written in both
-                        <code>vitest.config.js</code> and
+                        <strong><code>prefs.js</code> has no coverage</strong>, by
+                        design: it holds only Adw and Gtk widget construction, and the
+                        key list and wording it shows live in
+                        <code>modules/settings.js</code>, tested on plain Node. The
+                        exclusion is written in both <code>vitest.config.js</code> and
                         <code>sonar-project.properties</code> so the two agree.
+                        <code>modules/mpris.js</code>’s race logic — a player
+                        connecting, quitting or being dropped mid-load — is under test
+                        with a fake bus. The wire format itself is still checked against
+                        the real session bus, by <code>just mpris-check</code>, and
+                        against <code>scripts/fake-player.js</code> by
+                        <code>just test-live</code>.
                     </p>
                 </section>
 
