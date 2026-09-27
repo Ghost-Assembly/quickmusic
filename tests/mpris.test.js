@@ -6,7 +6,6 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import GLib from './stubs/gi-glib.js';
 import {
     cancelledError,
     fakeBus,
@@ -17,17 +16,6 @@ import {
 
 import { BUS_PREFIX } from '../modules/model.js';
 import { MprisWatcher } from '../modules/mpris.js';
-
-// tests/stubs/gi-glib.js is a shared, byte-locked stub (template.list) with
-// no VariantType: nothing needed one before mpris.js's start() built one for
-// its ListNames call. The alias in vitest.config.js makes this the same
-// module object mpris.js imports, so augmenting it here reaches mpris.js too,
-// without touching the file every extension shares.
-GLib.VariantType ??= class FakeVariantType {
-    constructor(signature) {
-        this.signature = signature;
-    }
-};
 
 const SPOTIFY = `${BUS_PREFIX}spotify`;
 
