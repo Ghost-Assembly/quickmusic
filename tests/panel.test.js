@@ -16,14 +16,14 @@ import { KEYS } from '../modules/settings.js';
 
 const SPOTIFY = `${BUS_PREFIX}spotify`;
 
-function setup(values = {}) {
+function setup(values = {}, { gettext = message => message } = {}) {
     const settings = createSettings(values);
     const source = createSource();
     const panel = new Panel({
         source,
         settings,
         iconPath: '/nonexistent/quickmusic-symbolic.svg',
-        gettext: message => message,
+        gettext,
     });
     panel.enable();
 
@@ -284,6 +284,35 @@ describe('the controls', () => {
             item => item instanceof PopupMenuItem && item.text === 'Open Chrome',
         );
         expect(open.visible).toBe(false);
+    });
+});
+
+// modules/panel.js's private fill(): one pass over the translated template, a
+// function replacer so an inserted value is never re-scanned.
+describe('the %s/%d template helper', () => {
+    const openRow = toggle =>
+        toggle().menu.items.find(
+            item => item instanceof PopupMenuItem && item.text.startsWith('Open'),
+        );
+
+    // A function replacer never reads the value as a replacement code, unlike
+    // a string replacement, where "$&" means "the whole match".
+    it('does not read a "$" pattern in a value as a replacement code', () => {
+        const { source, toggle } = setup();
+        source.set('spotify', {}, { Identity: 'Sunset $& Sunrise' });
+
+        expect(openRow(toggle).text).toBe('Open Sunset $& Sunrise');
+    });
+
+    // A translation is free to write %d instead of %s; both are placeholders.
+    it('fills a translation that uses %d as well as %s', () => {
+        const { source, toggle } = setup(
+            {},
+            { gettext: message => (message === 'Open %s' ? 'Open %d' : message) },
+        );
+        source.set('spotify', {}, { Identity: 'Spotify' });
+
+        expect(openRow(toggle).text).toBe('Open Spotify');
     });
 });
 
