@@ -7,14 +7,6 @@
  * characters by modules/model.js, so the preference means what it says.
  */
 
-.quickmusic-track {
-    spacing: 12px;
-}
-
-.quickmusic-art {
-    icon-size: 64px;
-}
-
 .quickmusic-title {
     font-weight: bold;
 }
@@ -24,12 +16,10 @@
     font-size: 0.9em;
 }
 
-.quickmusic-controls-box {
-    spacing: 12px;
-}
-
+/* Track rows inherit Shell theme spacing; control buttons use margins. */
 .quickmusic-button {
     padding: 8px;
+    margin: 0 6px;
 }
 
 .quickmusic-panel-label {

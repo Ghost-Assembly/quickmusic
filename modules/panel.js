@@ -134,7 +134,7 @@ class Controls {
             can_focus: false,
             style_class: 'quickmusic-track',
         });
-        this._art = new St.Icon({ style_class: 'quickmusic-art' });
+        this._art = new St.Icon({ style_class: 'quickmusic-art', icon_size: 64 });
         this._title = lineLabel('quickmusic-title');
         this._artist = lineLabel('quickmusic-artist', DIM);
         this._album = lineLabel('quickmusic-album', DIM);

@@ -33,7 +33,7 @@ Run `just ci` before claiming a change works.
 | `just template-check`                                                  | Compare managed files with the immutable GitHub revision in `quick-template.lock.json`          |
 | `just template-sync SHA`                                               | Synchronize a reviewed canonical revision; then install dependencies and regenerate docs        |
 | `just test`                                                            | Run Vitest, Python tooling tests, and project offline integration tests                         |
-| `just coverage`                                                        | Measure all runtime JavaScript, including untested files                                        |
+| `just coverage`                                                        | Measure runtime JavaScript and Python tooling, including untested files                         |
 | `just test-docs`                                                       | Check docs in Chromium and Firefox, including axe accessibility audits                          |
 | `just security`                                                        | Run OSV, source and history secret scans, Trivy, actionlint, and Zizmor                         |
 | `just build`                                                           | Build a deterministic runtime-only ZIP with Python's standard library                           |
@@ -81,7 +81,7 @@ Project commands: `just mpris-check` lists players on the session bus;
 
 - Write the failing test first.
 - `just test` uses Vitest with recording GNOME stubs; `just coverage`
-  measures all runtime JavaScript, including untested files. Native and live
+  measures runtime JavaScript and Python tooling, including untested files. Native and live
   integration checks remain separate from that coverage report.
 - `just test-live` (`scripts/headless-check.sh`): boots a throwaway headless
   GNOME Shell, puts `scripts/fake-player.js` on a private session bus, and
