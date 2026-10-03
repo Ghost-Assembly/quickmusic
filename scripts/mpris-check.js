@@ -15,6 +15,7 @@ import { MprisWatcher } from '../modules/mpris.js';
 import { formatLabel, selectPlayer } from '../modules/model.js';
 
 const SETTLE_MS = 1500;
+const checkOnly = ARGV.includes('--check-only');
 
 const loop = new GLib.MainLoop(null, false);
 const watcher = new MprisWatcher();
@@ -29,10 +30,14 @@ try {
 
 GLib.timeout_add(GLib.PRIORITY_DEFAULT, SETTLE_MS, () => {
     const players = watcher.players;
-    if (players.length === 0) print('no MPRIS players on this session bus');
+    if (checkOnly) {
+        print(`PASS: MPRIS probe completed (${players.length} players)`);
+    } else if (players.length === 0) {
+        print('no MPRIS players on this session bus');
+    }
 
     const selected = selectPlayer(players, {});
-    for (const player of players) {
+    for (const player of checkOnly ? [] : players) {
         const mark = player === selected ? '*' : ' ';
         const flags = Object.entries({
             canPlay: player.canPlay,

@@ -1,0 +1,18 @@
+{
+  "$schema": "quick-project.schema.json",
+  "runtimeFiles": [
+    "metadata.json",
+    "extension.js",
+    "prefs.js",
+    "LICENSE",
+    "modules/model.js",
+    "modules/mpris.js",
+    "modules/panel.js",
+    "modules/settings.js",
+    "schemas/org.gnome.shell.extensions.quickmusic.gschema.xml",
+    "icons/quickmusic-symbolic.svg",
+    "stylesheet.css"
+  ],
+  "docsPort": 8322,
+  "nativeTests": false
+}
