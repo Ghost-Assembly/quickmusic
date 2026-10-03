@@ -59,8 +59,7 @@ let index = 0;
 let playerExport = null;
 
 function metadata() {
-    // eslint-disable-next-line security/detect-object-injection -- index is always in range
-    const track = TRACKS[index];
+    const track = TRACKS.at(index);
     return {
         'mpris:trackid': new GLib.Variant('o', `/quickmusictest/track/${index}`),
         'xesam:title': new GLib.Variant('s', track.title),

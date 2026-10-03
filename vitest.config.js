@@ -10,23 +10,18 @@ export default defineConfig({
         include: ['tests/**/*.test.js'],
         coverage: {
             provider: 'v8',
-            reporter: ['text', 'lcov'],
-            // Everything the extension ships, so the denominator is the real
-            // one.
-            include: ['modules/**/*.js', 'extension.js', 'prefs.js'],
-            // One exception: prefs.js is Adw and Gtk widget building, which a
-            // unit test could only assert against a stub of the toolkit. The
-            // key list and wording it shows live in modules/settings.js and
-            // are checked there instead.
-            //
-            // Kept identical to sonar.coverage.exclusions so the two agree.
-            // tests/** keeps a dynamically imported stub out of the report.
-            exclude: ['prefs.js', 'tests/**'],
+            reporter: ['text', 'lcov', 'html'],
+            include: [
+                'modules/**/*.js',
+                'extension.js',
+                'prefs.js',
+                'scripts/soloist-runner.js',
+            ],
+            exclude: ['tests/**'],
         },
     },
 
-    // gnome-shell resolves these at runtime; Node cannot. The stubs live in
-    // tests/, so they never ship and are never counted as covered code.
+    // GNOME imports resolve to recording stubs for offline behavior tests.
     resolve: {
         alias: [
             { find: 'gi://Clutter', replacement: stub('gi-clutter') },
