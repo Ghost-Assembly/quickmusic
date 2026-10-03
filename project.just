@@ -10,4 +10,17 @@ fake-player:
 
 # Needs a real session bus with players on it, so it never runs in CI.
 # Run by test-live after the shared checks: probe the live players
-live-extra: mpris-check
+live-extra:
+    gjs -m scripts/mpris-check.js --check-only
+
+# Project-specific offline integration tests
+test-extra:
+    @true
+
+# Isolated GNOME lifecycle test
+live-check:
+    bash scripts/headless-check.sh
+
+# Project services stopped before uninstalling
+uninstall-extra:
+    @true

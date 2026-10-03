@@ -66,8 +66,12 @@ function cleanText(value) {
     // sending megabytes costs megabytes of regex on every update.
     const head = value.slice(0, MAX_TEXT * 4);
     // Control characters would break the single-line labels this ends up in.
-    // eslint-disable-next-line no-control-regex
-    const line = head.replace(/[\u0000-\u001f\u007f]+/g, ' ').replace(/\s+/g, ' ');
+    const line = Array.from(head, character => {
+        const code = character.codePointAt(0);
+        return code < 32 || code === 127 ? ' ' : character;
+    })
+        .join('')
+        .replace(/\s+/g, ' ');
     return ellipsize(line.trim(), MAX_TEXT);
 }
 

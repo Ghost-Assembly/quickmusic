@@ -1,0 +1,5 @@
+{
+  "$schema": "project.schema.json",
+  "repository": "quickmusic",
+  "requirements": "Requires an MPRIS-compatible media player on your session bus."
+}
