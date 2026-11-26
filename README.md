@@ -7,7 +7,7 @@
 [![Docs](https://img.shields.io/website?url=https%3A%2F%2Fghost-assembly.com%2Fquickmusic%2F&label=docs)](https://ghost-assembly.com/quickmusic/)
 [![Release](https://img.shields.io/github/v/release/Ghost-Assembly/quickmusic)](https://github.com/Ghost-Assembly/quickmusic/releases/latest)
 [![License](https://img.shields.io/github/license/Ghost-Assembly/quickmusic)](https://github.com/Ghost-Assembly/quickmusic/blob/main/LICENSE)
-[![GNOME](https://img.shields.io/badge/GNOME-50-blue)](https://ghost-assembly.com/quickmusic/#install)
+[![GNOME](https://img.shields.io/badge/GNOME-50%20%7C%2051-blue)](https://ghost-assembly.com/quickmusic/#install)
 [![Security issues](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fsonarcloud.io%2Fapi%2Fmeasures%2Fcomponent%3Fcomponent%3DGhost-Assembly_quickmusic%26metricKeys%3Dsoftware_quality_security_issues&query=%24.component.measures%5B0%5D.value&label=Security+issues)](https://sonarcloud.io/dashboard?id=Ghost-Assembly_quickmusic)
 [![Reliability issues](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fsonarcloud.io%2Fapi%2Fmeasures%2Fcomponent%3Fcomponent%3DGhost-Assembly_quickmusic%26metricKeys%3Dsoftware_quality_reliability_issues&query=%24.component.measures%5B0%5D.value&label=Reliability+issues)](https://sonarcloud.io/dashboard?id=Ghost-Assembly_quickmusic)
 [![Maintainability issues](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fsonarcloud.io%2Fapi%2Fmeasures%2Fcomponent%3Fcomponent%3DGhost-Assembly_quickmusic%26metricKeys%3Dsoftware_quality_maintainability_issues&query=%24.component.measures%5B0%5D.value&label=Maintainability+issues)](https://sonarcloud.io/dashboard?id=Ghost-Assembly_quickmusic)
@@ -41,7 +41,7 @@ architecture, testing, packaging and releasing.
 
 ## Requires
 
-- GNOME Shell 50
+- GNOME Shell 50 or 51
 - A player that speaks MPRIS. Most do. A Flatpak player also needs its
   manifest to allow `org.mpris.MediaPlayer2.<name>` on the session bus;
   Spotify's does.
@@ -60,7 +60,7 @@ architecture, testing, packaging and releasing.
 
 <!-- quick-template:install:start -->
 
-Requires GNOME Shell 50. Requires an MPRIS-compatible media player on your session bus.
+Requires GNOME Shell 50 or 51. Requires an MPRIS-compatible media player on your session bus.
 
 ### From a release
 
